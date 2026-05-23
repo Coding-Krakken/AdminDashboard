@@ -313,7 +313,7 @@ export default function LiveIntelligencePanel({ profileId }: LiveIntelligencePan
   const [thresholdAuditEvents, setThresholdAuditEvents] = useState<ThresholdAuditEntry[]>([]);
   const [thresholdAuditAvailable, setThresholdAuditAvailable] = useState(true);
 
-  const load = async () => {
+  const load = async (signal?: AbortSignal) => {
     const [
       intelligenceResponse,
       policiesResponse,
@@ -327,34 +327,41 @@ export default function LiveIntelligencePanel({ profileId }: LiveIntelligencePan
         `/api/admin/intelligence?profile=${encodeURIComponent(profileId)}&windowDays=${windowDays}`,
         {
           method: "GET",
-          cache: "no-store"
+          cache: "no-store",
+          signal
         }
       ),
       fetch("/api/admin/intelligence/policies", {
         method: "GET",
-        cache: "no-store"
+        cache: "no-store",
+        signal
       }),
       fetch("/api/admin/intelligence/deliveries?limit=12", {
         method: "GET",
-        cache: "no-store"
+        cache: "no-store",
+        signal
       }),
       fetch("/api/admin/intelligence/schedules", {
         method: "GET",
-        cache: "no-store"
+        cache: "no-store",
+        signal
       }),
       fetch("/api/admin/settings/schema?moduleId=intelligence", {
         method: "GET",
-        cache: "no-store"
+        cache: "no-store",
+        signal
       }),
-      fetch("/api/admin/settings/intelligence", {
+      fetch("/api/admin/settings?moduleId=intelligence", {
         method: "GET",
-        cache: "no-store"
+        cache: "no-store",
+        signal
       }),
       fetch(
         "/api/admin/audit?limit=8&entity=module-settings&entityId=intelligence&action=settings.patch",
         {
           method: "GET",
-          cache: "no-store"
+          cache: "no-store",
+          signal
         }
       )
     ]);
@@ -484,11 +491,16 @@ export default function LiveIntelligencePanel({ profileId }: LiveIntelligencePan
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
 
     const safeLoad = async () => {
       try {
-        await load();
+        await load(controller.signal);
       } catch (reason) {
+        if (reason instanceof DOMException && reason.name === "AbortError") {
+          return;
+        }
+
         if (!cancelled) {
           setError(reason instanceof Error ? reason.message : "Unknown error");
           setLoading(false);
@@ -502,6 +514,7 @@ export default function LiveIntelligencePanel({ profileId }: LiveIntelligencePan
     const timer = setInterval(safeLoad, 20000);
     return () => {
       cancelled = true;
+      controller.abort();
       clearInterval(timer);
     };
   }, [profileId, windowDays]);
@@ -936,12 +949,13 @@ export default function LiveIntelligencePanel({ profileId }: LiveIntelligencePan
     setIntelligenceSettingsMessage(null);
 
     try {
-      const response = await fetch("/api/admin/settings/intelligence", {
+      const response = await fetch("/api/admin/settings", {
         method: "PATCH",
         headers: {
           "content-type": "application/json"
         },
         body: JSON.stringify({
+          moduleId: "intelligence",
           values: intelligenceSettings,
           expectedVersion: intelligenceSettingsVersion ?? undefined
         })

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { authorizeAdminApiRequest } from "@/platform/admin-api-policy";
 import {
+  getModuleSettings,
   listModuleSettings,
   patchModuleSettings,
   recordAdminAuditEvent,
@@ -51,6 +52,21 @@ export async function GET(request: Request) {
   }
 
   try {
+    const url = new URL(request.url);
+    const moduleId = url.searchParams.get("moduleId")?.trim();
+
+    if (moduleId) {
+      const snapshot = await getModuleSettings(moduleId, { request });
+      if (!snapshot) {
+        return NextResponse.json(
+          { error: `Unknown module settings for '${moduleId}'.` },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json(snapshot);
+    }
+
     const settings = await listModuleSettings({ request });
     return NextResponse.json({ settings });
   } catch (error) {

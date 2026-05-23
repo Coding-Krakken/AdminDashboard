@@ -8,4 +8,5 @@ export * from "./settings";
 export * from "./config/schema";
 export * from "./config/validate";
 export * from "./config-resolver";
+export * from "./runtime-builder";
 export * from "./sdk";

@@ -1,0 +1,11 @@
+{
+  "runtime:lastContext:default-tenant": {
+    "userId": "starter-owner",
+    "tenantId": "default-tenant",
+    "role": "owner",
+    "at": "2026-05-23T03:04:59.598Z"
+  },
+  "runtime:healthProbe:default-tenant": {
+    "at": "2026-05-23T03:04:59.607Z"
+  }
+}

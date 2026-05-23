@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
+import type { DashboardConfigInput } from "./config/schema";
 import { validateDashboardConfig } from "./config/validate";
-import type { DashboardConfig, DashboardConfigInput } from "./types";
+import type { DashboardConfig } from "./types";
 
 export type DashboardConfigSource =
   | DashboardConfigInput
@@ -22,11 +23,11 @@ export async function resolveDashboardConfig(
 ): Promise<DashboardConfig> {
   const env = options.env ?? process.env;
 
-  if (typeof source !== "string" && !isConfigSourceObject(source)) {
+  if (typeof source !== "string" && !isConfigLocatorSource(source)) {
     return validateDashboardConfig(source);
   }
 
-  if (isConfigSourceObject(source)) {
+  if (isConfigLocatorSource(source)) {
     if ("filePath" in source) {
       return resolveFromFile(source.filePath);
     }
@@ -54,8 +55,24 @@ export async function resolveDashboardConfig(
   return resolveFromFile(normalized);
 }
 
-function isConfigSourceObject(value: unknown): value is { filePath: string } | { envVar: string } {
-  return typeof value === "object" && value !== null;
+export const resolveConfig = resolveDashboardConfig;
+
+function isConfigLocatorSource(
+  value: unknown
+): value is { filePath: string } | { envVar: string } {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  if ("filePath" in value) {
+    return typeof (value as { filePath?: unknown }).filePath === "string";
+  }
+
+  if ("envVar" in value) {
+    return typeof (value as { envVar?: unknown }).envVar === "string";
+  }
+
+  return false;
 }
 
 async function resolveFromFile(filePath: string): Promise<DashboardConfig> {

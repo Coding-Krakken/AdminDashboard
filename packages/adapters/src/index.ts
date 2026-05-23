@@ -187,4 +187,5 @@ export function createFileAuditAdapter(filePath: string): AuditAdapter & {
 
 export * from "./prisma";
 export * from "./auth-providers";
+export * from "./auth-detector";
 export * from "./environment";

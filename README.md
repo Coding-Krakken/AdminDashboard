@@ -22,6 +22,10 @@ Advanced implementation for a modular, multi-business admin dashboard platform.
 7. Verify config consistency: `npm run verify:config`
 8. Verify generated modules: `npm run verify:generated`
 9. Verify admin API policy coverage: `npm run verify:admin-policy`
+
+## Fast Integration
+
+- For a two-step integration flow into an existing website, see `INTEGRATION.md`.
 10. Verify migration readiness artifacts: `npm run verify:migration-readiness`
 11. Run migration backfill dry-run: `npm run migrate:backfill-runtime`
 

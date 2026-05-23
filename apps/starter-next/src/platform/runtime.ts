@@ -1,5 +1,5 @@
 import {
-  buildLayeredFlagMap,
+  buildRuntimeDashboardModel,
   hasPermission,
   type ModuleCapabilityDescriptor,
   type ModuleDataSourceDescriptor,
@@ -7,9 +7,7 @@ import {
   type ModuleCategory,
   type Permission,
   type PluginCompatibilityReport,
-  PluginRuntime,
   type ModulePlugin,
-  type PluginRuntimeContext,
   type UserPolicyContext
 } from "@universal-admin/core";
 import {
@@ -24,7 +22,12 @@ import {
   type PrismaLikeClient
 } from "@universal-admin/adapters";
 import { resolveThemeTokens } from "@universal-admin/theming";
-import { buildNavigation, buildShellModel } from "@universal-admin/ui";
+import {
+  buildNavigation,
+  buildShellModel,
+  type NavigationItem,
+  type ShellModel
+} from "@universal-admin/ui";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import path from "node:path";
 import { dashboardConfig, dashboardTheme, pluginSecurityPolicy } from "./config";
@@ -39,8 +42,26 @@ import {
 import { getRuntimePlugins, getStaticPlugins } from "./plugins";
 import { ensureSettingsRegistryInitialized, settingsRegistry } from "./settings";
 
-const RUNTIME_DB_PATH = path.resolve(process.cwd(), ".runtime-data.json");
-const RUNTIME_AUDIT_PATH = path.resolve(process.cwd(), ".runtime-audit.json");
+function resolveRuntimeStorePath(envKey: string, fallbackFile: string): string {
+  const configured = process.env[envKey]?.trim();
+  if (configured) {
+    return path.resolve(process.cwd(), configured);
+  }
+
+  // Keep worker data isolated during parallel test execution while preserving
+  // stable default filenames outside test workers.
+  const workerSuffix = process.env.VITEST_WORKER_ID
+    ? `.worker-${process.env.VITEST_WORKER_ID}`
+    : "";
+
+  return path.resolve(process.cwd(), `${fallbackFile}${workerSuffix}.json`);
+}
+
+const RUNTIME_DB_PATH = resolveRuntimeStorePath("ADMIN_RUNTIME_DB_PATH", ".runtime-data");
+const RUNTIME_AUDIT_PATH = resolveRuntimeStorePath(
+  "ADMIN_RUNTIME_AUDIT_PATH",
+  ".runtime-audit"
+);
 const provider = process.env.ADMIN_AUTH_PROVIDER ?? "memory";
 const dataProvider = process.env.ADMIN_DATA_PROVIDER ?? "file";
 
@@ -744,15 +765,6 @@ export function createRequestFromHeaderEntries(
     headers
   });
 }
-
-const collectRequiredFlagKeys = (plugins: ModulePlugin[]): string[] => {
-  return Array.from(
-    new Set([
-      ...dashboardConfig.modules.flatMap((module) => module.requiredFlags ?? []),
-      ...plugins.flatMap((plugin) => plugin.manifest.requiredFlags ?? [])
-    ])
-  );
-};
 
 const categoryDefaultCapabilities: Record<ModuleCategory, ModuleCapabilityDescriptor[]> = {
   overview: [
@@ -1795,31 +1807,27 @@ export async function buildDashboardModel(options: DashboardModelOptions = {}) {
   const staticPlugins = getStaticPlugins(pluginSecurityPolicy.signingSecret ?? "");
   const runtimePlugins = await getRuntimePlugins();
 
-  const runtime = new PluginRuntime(staticPlugins, {
-    securityPolicy: pluginSecurityPolicy
-  });
-
-  for (const plugin of runtimePlugins) {
-    runtime.registerPlugin(plugin, true);
-  }
-
-  const flagKeys = collectRequiredFlagKeys(runtimePlugins);
-
-  const layeredFlags = buildLayeredFlagMap(flagKeys, dashboardConfig.flags, {
-    role: policy.role,
-    tenantId: user.tenantId,
-    userId: user.id
-  });
-  const enabledFlags = applyPackFlags(layeredFlags, businessProfile);
-
-  const context: PluginRuntimeContext = {
+  const runtimeModel = await buildRuntimeDashboardModel<NavigationItem, ShellModel>({
+    config: dashboardConfig,
+    user: {
+      id: user.id,
+      tenantId: user.tenantId
+    },
     policy,
-    flags: enabledFlags,
-    tenantId: user.tenantId,
-    userId: user.id
-  };
+    staticPlugins,
+    runtimePlugins,
+    pluginSecurityPolicy,
+    applyFlags: (flags) => applyPackFlags(flags, businessProfile),
+    filterModules: (modules) => filterModulesByPack(modules, businessProfile),
+    buildNavigation,
+    buildShell: (navigation) => buildShellModel(navigation, "/")
+  });
 
-  await runtime.initialize(context);
+  const enabledFlags = runtimeModel.enabledFlags;
+  const profiledModules = runtimeModel.modules;
+  const navigation = runtimeModel.navigation;
+  const shell = runtimeModel.shell;
+  const pluginCompatibility = runtimeModel.pluginCompatibility;
 
   const tenantScopedLastContextKey = buildTenantScopedKey(
     "runtime:lastContext",
@@ -1832,11 +1840,6 @@ export async function buildDashboardModel(options: DashboardModelOptions = {}) {
     role: user.role,
     at: new Date().toISOString()
   });
-
-  const accessibleModules = runtime.resolveAccessibleModules(policy, enabledFlags);
-  const profiledModules = filterModulesByPack(accessibleModules, businessProfile);
-  const navigation = buildNavigation(profiledModules, policy, enabledFlags);
-  const shell = buildShellModel(navigation, "/");
 
   const unsubscribe = realtimeAdapter.subscribe("admin.activity", async () => {
     await auditAdapter.record({
@@ -1861,7 +1864,6 @@ export async function buildDashboardModel(options: DashboardModelOptions = {}) {
     request: options.request,
     limit: 0
   });
-  const pluginCompatibility = runtime.getCompatibilityMatrix(context);
 
   return {
     user,
@@ -1875,11 +1877,8 @@ export async function buildDashboardModel(options: DashboardModelOptions = {}) {
     },
     navigation,
     shell,
-    pluginCounts: {
-      static: staticPlugins.length,
-      runtime: runtimePlugins.length
-    },
-    pluginExecutionPlan: runtime.getContextualActivePluginExecutionPlan(context),
+    pluginCounts: runtimeModel.pluginCounts,
+    pluginExecutionPlan: runtimeModel.pluginExecutionPlan,
     pluginCompatibility,
     pluginRolloutSummary: buildPluginRolloutSummary(pluginCompatibility),
     security: {

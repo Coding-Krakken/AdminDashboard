@@ -54,6 +54,10 @@ See [templates/next-app-integration.ts](templates/next-app-integration.ts).
 
 See [templates/express-integration.ts](templates/express-integration.ts).
 
+## React embedded example
+
+See [templates/react-embedded.tsx](templates/react-embedded.tsx).
+
 ## Config input options
 
 - Object: `config: { modules, flags, rolePermissions }`
@@ -74,3 +78,46 @@ The default env helper reads these values:
 - `ADMIN_AUTH_PERMISSIONS` (comma-separated)
 
 For production, you can replace `createEnvAuthAdapter()` with your own adapter implementation that reads request/session context.
+
+## Optional auth provider detection
+
+If your host app forwards mixed auth headers, use `detectAuthProvider` and `extractAuthUserFromHeaders` from `@universal-admin/adapters` to normalize inbound identity context.
+
+## Environment matrix
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `ADMIN_DASHBOARD_CONFIG` | Yes (if using `env:` config source) | Dashboard config JSON payload |
+| `ADMIN_AUTH_PROVIDER` | Yes for env auth helper | Selects auth adapter mode (`memory`, `nextauth`, `clerk`, `anonymous`) |
+| `ADMIN_AUTH_USER_JSON` | Optional | Full user payload override for local/dev testing |
+| `ADMIN_AUTH_USER_ID` | Optional | User id fallback when JSON is not provided |
+| `ADMIN_AUTH_EMAIL` | Optional | User email fallback |
+| `ADMIN_AUTH_ROLE` | Optional | Role fallback |
+| `ADMIN_AUTH_TENANT_ID` | Optional | Tenant binding fallback |
+| `ADMIN_AUTH_PERMISSIONS` | Optional | Comma-separated permission fallback |
+
+## Local verification checklist
+
+Run these from repo root to validate integration behavior:
+
+```bash
+npm run typecheck
+npm run test
+npm run verify:config
+npm run verify:generated
+npm run verify:plugins
+npm run verify:admin-policy
+```
+
+For endpoint compatibility checks in starter-next:
+
+```bash
+npm run test -- apps/starter-next/app/api/admin/__tests__/route-payload-compat.test.ts
+```
+
+## Troubleshooting
+
+- `Invalid dashboard configuration`: validate `ADMIN_DASHBOARD_CONFIG` JSON shape (`modules`, `flags`, `rolePermissions`) and permission strings in `resource:action` format.
+- `Access denied` for admin APIs: ensure the user policy includes route action permissions (`runtime:read`, `intelligence:read`, etc.) and tenant context if your host enforces tenant checks.
+- Routes fail with `unknown runtime summary error`: verify auth adapter wiring first, then run `npm run verify:admin-policy` to ensure centralized authorization remains intact.
+- Dashboard returns empty modules: check module `requiredPermissions` and `requiredFlags` against current user permissions and enabled flags.
