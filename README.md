@@ -26,6 +26,40 @@ Advanced implementation for a modular, multi-business admin dashboard platform.
 ## Fast Integration
 
 - For a two-step integration flow into an existing website, see `INTEGRATION.md`.
+
+## Plug-and-Play Sidecar Kit
+
+For near-zero host-code integration, use the sidecar kit in `templates/plug-and-play/`:
+
+- `templates/plug-and-play/docker-compose.sidecar.yml`
+- `templates/plug-and-play/env.sidecar.example`
+- `templates/plug-and-play/reverse-proxy/nginx.admin-dashboard.conf`
+- `templates/plug-and-play/reverse-proxy/caddy.admin-dashboard.Caddyfile`
+
+Readiness check command:
+
+```bash
+npm run verify:plug-and-play -- --base-url=http://localhost:3000
+```
+
+Add `--strict-http` to fail the check when health/profile endpoints are not reachable.
+
+One-command kit generation:
+
+```bash
+npm run bootstrap:plug-and-play -- --profile=commerce --auth-provider=nextauth --proxy=nginx
+```
+
+Interactive generator mode:
+
+```bash
+npm run bootstrap:plug-and-play -- --interactive
+```
+
+Note: interactive mode requires a TTY terminal. For CI/automation use non-interactive flags.
+
+This generates a ready-to-use kit under `.admin-dashboard-kit/` (env file, sidecar compose file, and reverse proxy config).
+
 10. Verify migration readiness artifacts: `npm run verify:migration-readiness`
 11. Run migration backfill dry-run: `npm run migrate:backfill-runtime`
 

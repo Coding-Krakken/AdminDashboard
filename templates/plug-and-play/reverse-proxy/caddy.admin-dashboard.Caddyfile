@@ -1,0 +1,15 @@
+# Reverse proxy template for host app + Universal Admin sidecar.
+#
+# Expected routing:
+# - Host app: host-app:3000
+# - Admin sidecar: admin-sidecar:4100
+
+:80 {
+  @admin_ui path /admin /admin/*
+  reverse_proxy @admin_ui admin-sidecar:4100
+
+  @admin_api path /api/admin/*
+  reverse_proxy @admin_api admin-sidecar:4100
+
+  reverse_proxy host-app:3000
+}

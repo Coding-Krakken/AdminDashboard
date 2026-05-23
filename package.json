@@ -13,6 +13,8 @@
     "verify:config": "node ./scripts/verify-config.mjs",
     "verify:generated": "node ./scripts/verify-generated-modules.mjs",
     "verify:plugins": "node ./scripts/verify-plugins.mjs",
+    "verify:plug-and-play": "node ./scripts/verify-plug-and-play-readiness.mjs",
+    "bootstrap:plug-and-play": "node ./scripts/bootstrap-plug-and-play.mjs",
     "verify:migration-readiness": "node ./scripts/verify-migration-readiness.mjs",
     "migrate:backfill-runtime": "node ./scripts/backfill-runtime-state.mjs --dry-run",
     "verify:admin-policy": "node ./scripts/verify-admin-api-policy.mjs",

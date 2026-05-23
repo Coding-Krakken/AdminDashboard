@@ -2,6 +2,49 @@
 
 Use this when you want to embed the admin dashboard into an existing website as quickly as possible.
 
+## Zero-Code Sidecar Quickstart (Recommended)
+
+For a plug-and-play rollout with minimal host code changes:
+
+1. Add this repo as a submodule in your host project:
+
+```bash
+git submodule add https://github.com/Coding-Krakken/AdminDashboard.git admin-dashboard
+git submodule update --init --recursive
+```
+
+2. Copy `templates/plug-and-play/env.sidecar.example` to your host `.env` file and adjust values.
+3. Run the starter sidecar from `templates/plug-and-play/docker-compose.sidecar.yml`.
+4. Route `/admin` and `/api/admin/*` to the sidecar using one of:
+  - `templates/plug-and-play/reverse-proxy/nginx.admin-dashboard.conf`
+  - `templates/plug-and-play/reverse-proxy/caddy.admin-dashboard.Caddyfile`
+5. Validate readiness:
+
+```bash
+node admin-dashboard/scripts/verify-plug-and-play-readiness.mjs --base-url=http://localhost:3000 --strict-http
+```
+
+Optional one-command kit generation from your host repository root:
+
+```bash
+node admin-dashboard/scripts/bootstrap-plug-and-play.mjs --profile=generic --auth-provider=memory --proxy=both
+```
+
+Interactive mode:
+
+```bash
+node admin-dashboard/scripts/bootstrap-plug-and-play.mjs --interactive
+```
+
+Interactive mode requires a TTY terminal. For automation, pass explicit flags instead.
+
+This generates `.admin-dashboard-kit/` with:
+- `.env.admin-dashboard`
+- `docker-compose.admin-dashboard.sidecar.yml`
+- reverse proxy snippets (nginx/caddy based on `--proxy`)
+
+This mode keeps your host app mostly unchanged while providing full admin UI + APIs.
+
 ## Step 1: Initialize dashboard once
 
 Install packages:

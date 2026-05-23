@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  universal-admin-starter:
+    image: node:22-alpine
+    container_name: universal-admin-starter
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -w @universal-admin/starter-next"
+    ports:
+      - "4100:3000"
+    environment:
+      ADMIN_BUSINESS_PROFILE: ${ADMIN_BUSINESS_PROFILE:-generic}
+      ADMIN_AUTH_PROVIDER: ${ADMIN_AUTH_PROVIDER:-memory}
+      ADMIN_AUTH_USER_ID: ${ADMIN_AUTH_USER_ID:-dev-admin}
+      ADMIN_AUTH_ROLE: ${ADMIN_AUTH_ROLE:-admin}
+      ADMIN_AUTH_EMAIL: ${ADMIN_AUTH_EMAIL:-admin@localhost}
+    volumes:
+      - ../../:/app
