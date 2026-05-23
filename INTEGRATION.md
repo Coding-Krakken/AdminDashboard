@@ -14,6 +14,8 @@ git submodule update --init --recursive
 ```
 
 2. Copy `templates/plug-and-play/env.sidecar.example` to your host `.env` file and adjust values.
+  - Set `ADMIN_PUBLIC_BASE_PATH` to your mount path (default: `/admin`).
+  - Map brand tokens using `ADMIN_HOST_THEME_FILE` (or inline `ADMIN_HOST_THEME_JSON`).
 3. Run the starter sidecar from `templates/plug-and-play/docker-compose.sidecar.yml`.
 4. Route `/admin` and `/api/admin/*` to the sidecar using one of:
   - `templates/plug-and-play/reverse-proxy/nginx.admin-dashboard.conf`
@@ -30,6 +32,12 @@ Optional one-command kit generation from your host repository root:
 node admin-dashboard/scripts/bootstrap-plug-and-play.mjs --profile=generic --auth-provider=memory --proxy=both
 ```
 
+To let bootstrap recommend the best business profile from host signals:
+
+```bash
+node admin-dashboard/scripts/bootstrap-plug-and-play.mjs --profile=auto --profile-hints="shopify checkout subscriptions"
+```
+
 Interactive mode:
 
 ```bash
@@ -41,6 +49,8 @@ Interactive mode requires a TTY terminal. For automation, pass explicit flags in
 This generates `.admin-dashboard-kit/` with:
 - `.env.admin-dashboard`
 - `docker-compose.admin-dashboard.sidecar.yml`
+- `theme.tokens.json`
+- `profile.recommendation.json`
 - reverse proxy snippets (nginx/caddy based on `--proxy`)
 
 This mode keeps your host app mostly unchanged while providing full admin UI + APIs.
@@ -131,6 +141,7 @@ If your host app forwards mixed auth headers, use `detectAuthProvider` and `extr
 | Variable | Required | Purpose |
 | --- | --- | --- |
 | `ADMIN_DASHBOARD_CONFIG` | Yes (if using `env:` config source) | Dashboard config JSON payload |
+| `ADMIN_PUBLIC_BASE_PATH` | Recommended in sidecar mode | Mount path used for dashboard links/assets (`/admin` by default) |
 | `ADMIN_AUTH_PROVIDER` | Yes for env auth helper | Selects auth adapter mode (`memory`, `nextauth`, `clerk`, `anonymous`) |
 | `ADMIN_AUTH_USER_JSON` | Optional | Full user payload override for local/dev testing |
 | `ADMIN_AUTH_USER_ID` | Optional | User id fallback when JSON is not provided |
@@ -138,6 +149,8 @@ If your host app forwards mixed auth headers, use `detectAuthProvider` and `extr
 | `ADMIN_AUTH_ROLE` | Optional | Role fallback |
 | `ADMIN_AUTH_TENANT_ID` | Optional | Tenant binding fallback |
 | `ADMIN_AUTH_PERMISSIONS` | Optional | Comma-separated permission fallback |
+| `ADMIN_HOST_THEME_FILE` | Optional | Path to JSON file containing host theme tokens |
+| `ADMIN_HOST_THEME_JSON` | Optional | Inline JSON theme token overrides |
 
 ## Local verification checklist
 
@@ -156,6 +169,12 @@ For endpoint compatibility checks in starter-next:
 
 ```bash
 npm run test -- apps/starter-next/app/api/admin/__tests__/route-payload-compat.test.ts
+```
+
+For full plug-and-play checks including admin UI and module routes:
+
+```bash
+node admin-dashboard/scripts/verify-plug-and-play-readiness.mjs --base-url=http://localhost:3000 --admin-path=/admin --module-routes=crm,reporting,settings --strict-http
 ```
 
 ## Troubleshooting

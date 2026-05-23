@@ -43,11 +43,18 @@ npm run verify:plug-and-play -- --base-url=http://localhost:3000
 ```
 
 Add `--strict-http` to fail the check when health/profile endpoints are not reachable.
+Add `--admin-path=/admin --module-routes=crm,reporting,settings` to verify UI/module route readiness.
 
 One-command kit generation:
 
 ```bash
 npm run bootstrap:plug-and-play -- --profile=commerce --auth-provider=nextauth --proxy=nginx
+```
+
+Automatic profile recommendation from host signals:
+
+```bash
+npm run bootstrap:plug-and-play -- --profile=auto --profile-hints="checkout subscriptions work order"
 ```
 
 Interactive generator mode:
@@ -59,6 +66,7 @@ npm run bootstrap:plug-and-play -- --interactive
 Note: interactive mode requires a TTY terminal. For CI/automation use non-interactive flags.
 
 This generates a ready-to-use kit under `.admin-dashboard-kit/` (env file, sidecar compose file, and reverse proxy config).
+The generated kit also includes `theme.tokens.json` and `profile.recommendation.json` for branding and business-fit validation.
 
 10. Verify migration readiness artifacts: `npm run verify:migration-readiness`
 11. Run migration backfill dry-run: `npm run migrate:backfill-runtime`

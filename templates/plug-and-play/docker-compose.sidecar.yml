@@ -10,9 +10,11 @@ services:
       - "4100:3000"
     environment:
       ADMIN_BUSINESS_PROFILE: ${ADMIN_BUSINESS_PROFILE:-generic}
+      ADMIN_PUBLIC_BASE_PATH: ${ADMIN_PUBLIC_BASE_PATH:-/admin}
       ADMIN_AUTH_PROVIDER: ${ADMIN_AUTH_PROVIDER:-memory}
       ADMIN_AUTH_USER_ID: ${ADMIN_AUTH_USER_ID:-dev-admin}
       ADMIN_AUTH_ROLE: ${ADMIN_AUTH_ROLE:-admin}
       ADMIN_AUTH_EMAIL: ${ADMIN_AUTH_EMAIL:-admin@localhost}
+      ADMIN_HOST_THEME_FILE: ${ADMIN_HOST_THEME_FILE:-.admin-dashboard-kit/theme.tokens.json}
     volumes:
       - ../../:/app

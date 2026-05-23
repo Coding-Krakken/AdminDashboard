@@ -6,9 +6,9 @@
         "refreshIntervalSeconds": 120
       },
       "__uaMeta": {
-        "version": 5,
+        "version": 6,
         "schemaVersion": 1,
-        "updatedAt": "2026-05-23T03:15:29.917Z",
+        "updatedAt": "2026-05-23T18:57:00.196Z",
         "updatedBy": "starter-owner"
       }
     }
@@ -20,9 +20,9 @@
         "refreshIntervalSeconds": 30
       },
       "__uaMeta": {
-        "version": 5,
+        "version": 6,
         "schemaVersion": 1,
-        "updatedAt": "2026-05-23T03:15:29.919Z",
+        "updatedAt": "2026-05-23T18:57:00.210Z",
         "updatedBy": "starter-owner"
       }
     }
@@ -644,6 +644,128 @@
       "version": 1,
       "nextRunAt": "2026-05-23T04:15:30.025Z",
       "updatedAt": "2026-05-23T03:15:30.025Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779562620234": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-23T18:57:00.239Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779562620243": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-23T18:57:00.244Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779562620243": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-23T18:57:00.251Z",
+      "error": null,
+      "at": "2026-05-23T18:57:00.251Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779562620257": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-23T18:57:00.258Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779562620257": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-23T18:57:00.261Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779562620268": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-23T18:57:00.269Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779562620268": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-23T18:57:00.274Z",
+      "error": null,
+      "at": "2026-05-23T18:57:00.274Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-23T18:57:00.280Z",
+      "error": null,
+      "at": "2026-05-23T18:57:00.280Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779562620284": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779562620293": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-23T18:57:00.294Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779562620297": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-23T19:57:00.297Z",
+      "updatedAt": "2026-05-23T18:57:00.299Z"
     }
   }
 }

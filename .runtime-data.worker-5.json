@@ -3,7 +3,7 @@
     "userId": "starter-owner",
     "tenantId": "default-tenant",
     "role": "owner",
-    "at": "2026-05-23T03:15:29.931Z"
+    "at": "2026-05-23T18:57:00.220Z"
   },
   "runtime:healthProbe:default-tenant": {
     "at": "2026-05-23T03:11:07.002Z"
@@ -17,7 +17,7 @@
         "ops.incidents"
       ],
       "columns": 6,
-      "updatedAt": "2026-05-23T03:15:29.939Z"
+      "updatedAt": "2026-05-23T18:57:00.227Z"
     }
   }
 }

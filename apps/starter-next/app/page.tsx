@@ -7,6 +7,7 @@ import {
   createRequestFromHeaderEntries,
   getProfileCatalog
 } from "@/platform/runtime";
+import { withPublicBasePath } from "@/platform/public-path";
 
 interface PageProps {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -179,7 +180,7 @@ export default async function Page({ searchParams }: PageProps) {
               <ul>
                 {items.map((item) => (
                   <li key={item.id}>
-                    <Link href={item.route} className="text-link">
+                    <Link href={withPublicBasePath(item.route)} className="text-link">
                       {item.label}
                     </Link>{" "}
                     <span className="badge">{item.route}</span>
@@ -220,7 +221,7 @@ export default async function Page({ searchParams }: PageProps) {
             {profiles.map((profile) => (
               <Link
                 key={profile.id}
-                href={`/?profile=${profile.id}`}
+                href={`${withPublicBasePath("/")}?profile=${profile.id}`}
                 className="text-link"
                 style={{ marginRight: 12 }}
               >

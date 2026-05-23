@@ -5,6 +5,7 @@ import {
   createRequestFromHeaderEntries,
   getModuleRuntimeView
 } from "@/platform/runtime";
+import { withPublicBasePath } from "@/platform/public-path";
 
 interface ModulePageProps {
   params: Promise<{ moduleId: string }>;
@@ -44,7 +45,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
           </li>
         </ul>
         <p>
-          <Link href="/" className="text-link">
+          <Link href={withPublicBasePath("/")} className="text-link">
             Back To Dashboard
           </Link>
         </p>

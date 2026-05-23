@@ -5,6 +5,8 @@ import {
   validateDashboardConfig
 } from "@universal-admin/core";
 import type { ThemeBundle } from "@universal-admin/theming";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const ownerPermissions: Permission[] = ["*:*"];
 const adminPermissions: Permission[] = [
@@ -325,6 +327,66 @@ export const pluginSecurityPolicy: PluginSecurityPolicy = {
   strictSignatures: true
 };
 
+function parseThemeTokenMap(raw: string | undefined): Record<string, string> | undefined {
+  if (!raw || raw.trim().length === 0) {
+    return undefined;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    return Object.entries(parsed).reduce<Record<string, string>>((acc, [key, value]) => {
+      if (typeof key === "string" && typeof value === "string") {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+  } catch {
+    return undefined;
+  }
+}
+
+function readThemeTokenFile(envVarName: string): Record<string, string> | undefined {
+  const configuredPath = process.env[envVarName]?.trim();
+  if (!configuredPath) {
+    return undefined;
+  }
+
+  const absolutePath = resolve(process.cwd(), configuredPath);
+  if (!existsSync(absolutePath)) {
+    return undefined;
+  }
+
+  try {
+    const content = readFileSync(absolutePath, "utf8");
+    return parseThemeTokenMap(content);
+  } catch {
+    return undefined;
+  }
+}
+
+function resolveThemeOverride(jsonEnvName: string, fileEnvName: string) {
+  const inline = parseThemeTokenMap(process.env[jsonEnvName]);
+  if (inline && Object.keys(inline).length > 0) {
+    return inline;
+  }
+
+  const fromFile = readThemeTokenFile(fileEnvName);
+  if (fromFile && Object.keys(fromFile).length > 0) {
+    return fromFile;
+  }
+
+  return undefined;
+}
+
+const hostThemeOverride = resolveThemeOverride(
+  "ADMIN_HOST_THEME_JSON",
+  "ADMIN_HOST_THEME_FILE"
+);
+const tenantThemeOverride = resolveThemeOverride(
+  "ADMIN_TENANT_THEME_JSON",
+  "ADMIN_TENANT_THEME_FILE"
+);
+
 export const dashboardTheme: ThemeBundle = {
   base: {
     "dashboard-bg": "#091225",
@@ -336,9 +398,11 @@ export const dashboardTheme: ThemeBundle = {
     "dashboard-border": "#1c365f"
   },
   host: {
-    "dashboard-accent": "#1d4ed8"
+    "dashboard-accent": "#1d4ed8",
+    ...(hostThemeOverride ?? {})
   },
   tenant: {
-    "dashboard-panel": "#0f1f39"
+    "dashboard-panel": "#0f1f39",
+    ...(tenantThemeOverride ?? {})
   }
 };

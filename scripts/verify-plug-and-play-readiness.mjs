@@ -9,10 +9,23 @@ const require = createRequire(import.meta.url);
 const VALID_PROFILES = new Set(["generic", "field-service", "saas", "commerce"]);
 const VALID_AUTH_PROVIDERS = new Set(["memory", "nextauth", "clerk", "jwt", "anonymous"]);
 
+function normalizePath(value, fallback) {
+  const trimmed = (value ?? "").trim();
+  if (!trimmed) {
+    return fallback;
+  }
+
+  const withSlash = trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+  const normalized = withSlash.replace(/\/+$/, "");
+  return normalized || fallback;
+}
+
 function parseArgs(argv) {
   const parsed = {
     baseUrl: null,
     timeoutMs: 5000,
+    adminPath: "/admin",
+    moduleRoutes: ["crm", "reporting", "settings"],
     strictHttp: false,
     help: false
   };
@@ -28,6 +41,21 @@ function parseArgs(argv) {
       if (Number.isFinite(raw) && raw > 0) {
         parsed.timeoutMs = raw;
       }
+      continue;
+    }
+
+    if (arg.startsWith("--admin-path=")) {
+      parsed.adminPath = normalizePath(arg.slice("--admin-path=".length), "/admin");
+      continue;
+    }
+
+    if (arg.startsWith("--module-routes=")) {
+      parsed.moduleRoutes = arg
+        .slice("--module-routes=".length)
+        .split(",")
+        .map((entry) => normalizePath(entry, ""))
+        .filter(Boolean)
+        .map((entry) => entry.replace(/^\//, ""));
       continue;
     }
 
@@ -48,15 +76,17 @@ function printUsage() {
   console.log(`Usage: node scripts/verify-plug-and-play-readiness.mjs [options]
 
 Options:
-  --base-url=<url>     Check /api/admin/health and /api/admin/profiles on this base URL
-  --timeout-ms=<ms>    HTTP timeout in milliseconds (default: 5000)
-  --strict-http        Treat HTTP endpoint failures as hard failures
-  -h, --help           Show this help
+  --base-url=<url>        Check /api/admin/* and admin UI routes on this base URL
+  --admin-path=<path>     Mounted admin UI path (default: /admin)
+  --module-routes=<list>  Comma-separated module routes to check (default: crm,reporting,settings)
+  --timeout-ms=<ms>       HTTP timeout in milliseconds (default: 5000)
+  --strict-http           Treat HTTP endpoint failures as hard failures
+  -h, --help              Show this help
 
 Examples:
   node scripts/verify-plug-and-play-readiness.mjs
   node scripts/verify-plug-and-play-readiness.mjs --base-url=http://localhost:3000
-  node scripts/verify-plug-and-play-readiness.mjs --base-url=http://localhost:3000 --strict-http
+  node scripts/verify-plug-and-play-readiness.mjs --base-url=http://localhost:3000 --admin-path=/admin --strict-http
 `);
 }
 
@@ -109,6 +139,7 @@ function checkSubmodule() {
 function checkEnv() {
   const profile = (process.env.ADMIN_BUSINESS_PROFILE ?? "").trim();
   const provider = (process.env.ADMIN_AUTH_PROVIDER ?? "").trim();
+  const publicBasePath = normalizePath(process.env.ADMIN_PUBLIC_BASE_PATH, "/admin");
 
   const profileOk = Boolean(profile) && VALID_PROFILES.has(profile);
   const providerOk = Boolean(provider) && VALID_AUTH_PROVIDERS.has(provider);
@@ -131,6 +162,14 @@ function checkEnv() {
           ? `set to ${provider}`
           : `invalid value ${provider}; expected one of: ${Array.from(VALID_AUTH_PROVIDERS).join(", ")}`
         : "not set"
+    },
+    {
+      name: "ADMIN_PUBLIC_BASE_PATH",
+      ok: publicBasePath.length > 1,
+      detail:
+        process.env.ADMIN_PUBLIC_BASE_PATH && process.env.ADMIN_PUBLIC_BASE_PATH.trim().length > 0
+          ? `set to ${publicBasePath}`
+          : "not set (recommended: /admin for sidecar mode)"
     }
   ];
 }
@@ -144,6 +183,28 @@ async function checkEndpoint(url, timeoutMs) {
     return {
       ok: response.ok,
       detail: `HTTP ${response.status}`
+    };
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : "request failed";
+    return { ok: false, detail };
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function checkHtmlEndpoint(url, timeoutMs, expectedSnippet) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    const body = await response.text();
+    const hasSnippet = expectedSnippet ? body.includes(expectedSnippet) : true;
+    return {
+      ok: response.ok && hasSnippet,
+      detail: hasSnippet
+        ? `HTTP ${response.status}`
+        : `HTTP ${response.status}; expected snippet not found: ${expectedSnippet}`
     };
   } catch (error) {
     const detail = error instanceof Error ? error.message : "request failed";
@@ -187,8 +248,25 @@ async function main() {
   let httpChecks = [];
   if (args.baseUrl) {
     printSection("HTTP Endpoints");
+    const normalizedAdminPath = normalizePath(args.adminPath, "/admin");
     const health = await checkEndpoint(`${args.baseUrl}/api/admin/health`, args.timeoutMs);
     const profiles = await checkEndpoint(`${args.baseUrl}/api/admin/profiles`, args.timeoutMs);
+    const adminUi = await checkHtmlEndpoint(
+      `${args.baseUrl}${normalizedAdminPath}`,
+      args.timeoutMs,
+      "Universal"
+    );
+
+    const moduleChecks = [];
+    for (const route of args.moduleRoutes) {
+      const modulePath = `${normalizedAdminPath}/${route}`.replace(/\/+/g, "/");
+      const result = await checkEndpoint(`${args.baseUrl}${modulePath}`, args.timeoutMs);
+      moduleChecks.push({
+        name: `${args.baseUrl}${modulePath}`,
+        ok: result.ok,
+        detail: result.detail
+      });
+    }
 
     httpChecks = [
       {
@@ -200,8 +278,13 @@ async function main() {
         name: `${args.baseUrl}/api/admin/profiles`,
         ok: profiles.ok,
         detail: profiles.detail
+      },
+      {
+        name: `${args.baseUrl}${normalizedAdminPath}`,
+        ok: adminUi.ok,
+        detail: adminUi.detail
       }
-    ];
+    ].concat(moduleChecks);
 
     printChecks(httpChecks);
   }
@@ -215,6 +298,8 @@ async function main() {
 
   printSection("Summary");
   console.log(`baseUrl: ${args.baseUrl ?? "(not provided)"}`);
+  console.log(`adminPath: ${args.adminPath}`);
+  console.log(`moduleRoutes: ${args.moduleRoutes.join(",")}`);
   console.log(`strictHttp: ${args.strictHttp ? "enabled" : "disabled"}`);
 
   if (hardFailures) {
