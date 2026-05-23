@@ -1,0 +1,12 @@
+{
+  "name": "@universal-admin/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "universal-admin": "./bin/universal-admin.js"
+  },
+  "scripts": {
+    "typecheck": "echo \"No TypeScript checks for CLI package\""
+  }
+}

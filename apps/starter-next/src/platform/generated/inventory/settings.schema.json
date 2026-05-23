@@ -1,0 +1,22 @@
+{
+  "moduleId": "inventory",
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "refreshIntervalSeconds": {
+        "type": "integer",
+        "minimum": 15,
+        "maximum": 3600,
+        "default": 60
+      }
+    },
+    "required": [
+      "enabled"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "inventory-plugin",
+  "version": "0.1.0",
+  "source": "generated",
+  "manifest": {
+    "id": "inventory",
+    "title": "Inventory",
+    "route": "/inventory",
+    "category": "operations",
+    "order": 999,
+    "requiredPermissions": [
+      "inventory:read"
+    ]
+  },
+  "signature": "51178f804a9a1aac74c00599f0ba7971826a8d7eb977d91acd057810e8daf5aa"
+}

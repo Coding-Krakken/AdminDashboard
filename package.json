@@ -1,0 +1,27 @@
+{
+  "name": "@universal-admin/workspace",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "verify:config": "node ./scripts/verify-config.mjs",
+    "verify:generated": "node ./scripts/verify-generated-modules.mjs",
+    "verify:plugins": "node ./scripts/verify-plugins.mjs",
+    "verify:migration-readiness": "node ./scripts/verify-migration-readiness.mjs",
+    "migrate:backfill-runtime": "node ./scripts/backfill-runtime-state.mjs --dry-run",
+    "verify:admin-policy": "node ./scripts/verify-admin-api-policy.mjs",
+    "dev:starter": "npm run dev -w @universal-admin/starter-next",
+    "scaffold:module": "universal-admin create-module"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "typescript": "^5.8.2",
+    "vitest": "^2.1.9"
+  }
+}

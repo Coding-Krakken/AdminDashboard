@@ -1,0 +1,31 @@
+[
+  {
+    "id": "integrations",
+    "version": "1.0.0",
+    "signature": "675be970304ae039b93ab3b5c7b80ca93d836919bf83015f2b5505f624ece639",
+    "manifest": {
+      "id": "integrations",
+      "title": "Integrations",
+      "route": "/integrations",
+      "category": "system",
+      "order": 96,
+      "icon": "plug",
+      "requiredPermissions": ["settings:read"],
+      "requiredFlags": ["runtime-plugin-integrations"]
+    }
+  },
+  {
+    "id": "notifications",
+    "version": "1.0.0",
+    "signature": "693f1d4da8c58f512170b4cb4d3fff301bcef4b4dd974d1e67df61a99161aee5",
+    "manifest": {
+      "id": "notifications",
+      "title": "Notifications",
+      "route": "/notifications",
+      "category": "automation",
+      "order": 60,
+      "icon": "bell",
+      "requiredPermissions": ["dashboard:read"]
+    }
+  }
+]
