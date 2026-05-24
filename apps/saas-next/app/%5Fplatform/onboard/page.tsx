@@ -300,7 +300,7 @@ export default function PlatformOnboardPage() {
         <header>
           <h1 className="text-3xl font-semibold tracking-tight">Tenant Onboarding</h1>
           <p className="text-muted-foreground mt-2">
-            Provision a tenant, choose custom domain and/or Platform API alias access, then complete verification steps.
+            Provision a tenant and choose how to connect it: via a custom domain (DNS subdomain) or a URL route path — no DNS setup required.
           </p>
         </header>
 
@@ -339,6 +339,49 @@ export default function PlatformOnboardPage() {
                   />
                 </div>
               </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-medium">Access Method</label>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    className={`rounded-md border px-3 py-2 text-sm text-left ${
+                      accessStrategy === "domain"
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-background"
+                    }`}
+                    onClick={() => setAccessStrategy("domain")}
+                  >
+                    <span className="font-medium block">Custom Domain</span>
+                    <span className="text-xs text-muted-foreground">DNS subdomain mapping</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`rounded-md border px-3 py-2 text-sm text-left ${
+                      accessStrategy === "api-alias"
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-background"
+                    }`}
+                    onClick={() => setAccessStrategy("api-alias")}
+                  >
+                    <span className="font-medium block">Route Path</span>
+                    <span className="text-xs text-muted-foreground">Mount at a URL route</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`rounded-md border px-3 py-2 text-sm text-left ${
+                      accessStrategy === "both"
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-background"
+                    }`}
+                    onClick={() => setAccessStrategy("both")}
+                  >
+                    <span className="font-medium block">Both</span>
+                    <span className="text-xs text-muted-foreground">Domain + route path</span>
+                  </button>
+                </div>
+              </div>
+
               <button
                 onClick={createTenant}
                 disabled={!canCreateTenant || isSubmitting}
@@ -354,48 +397,10 @@ export default function PlatformOnboardPage() {
               <h2 className="text-lg font-medium">2. Attach Domain</h2>
               <p className="text-sm text-muted-foreground">
                 Tenant <span className="font-medium text-foreground">{tenant.name}</span> created.
+                Access method: <span className="font-medium text-foreground">
+                  {accessStrategy === "domain" ? "Custom Domain" : accessStrategy === "api-alias" ? "Route Path" : "Both"}
+                </span>
               </p>
-              <div className="space-y-2">
-                <label className="block text-sm font-medium">Access Method</label>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    className={`rounded-md border px-3 py-2 text-sm text-left ${
-                      accessStrategy === "domain"
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-background"
-                    }`}
-                    onClick={() => setAccessStrategy("domain")}
-                  >
-                    Subdomain Only
-                  </button>
-                  <button
-                    type="button"
-                    className={`rounded-md border px-3 py-2 text-sm text-left ${
-                      accessStrategy === "api-alias"
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-background"
-                    }`}
-                    onClick={() => setAccessStrategy("api-alias")}
-                  >
-                    Platform API Alias
-                  </button>
-                  <button
-                    type="button"
-                    className={`rounded-md border px-3 py-2 text-sm text-left ${
-                      accessStrategy === "both"
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-background"
-                    }`}
-                    onClick={() => setAccessStrategy("both")}
-                  >
-                    Both
-                  </button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Keep custom-domain onboarding and optionally enable alias routing for free project URLs.
-                </p>
-              </div>
 
               {needsDomain && (
                 <div>
@@ -411,7 +416,7 @@ export default function PlatformOnboardPage() {
 
               {shouldShowAlias && platformAlias && (
                 <div className="rounded-md border border-border p-3 bg-background space-y-2">
-                  <p className="text-sm font-medium">Platform API Route Alias</p>
+                  <p className="text-sm font-medium">Route Path Access</p>
                   <p className="text-xs text-muted-foreground">{platformAlias.routePath}</p>
                   <button
                     type="button"
@@ -463,7 +468,7 @@ export default function PlatformOnboardPage() {
 
               {platformAlias && shouldShowAlias && (
                 <div className="rounded-md border border-border p-3 bg-background space-y-2">
-                  <p className="text-sm font-medium">Tenant Alias Ready</p>
+                  <p className="text-sm font-medium">Route Path Ready</p>
                   <p className="text-xs text-muted-foreground">{platformAlias.dashboardUrl}</p>
                   <button
                     type="button"
