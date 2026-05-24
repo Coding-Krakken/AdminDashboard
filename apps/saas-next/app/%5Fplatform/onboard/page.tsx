@@ -164,6 +164,23 @@ export default function PlatformOnboardPage() {
     ].join("\n");
   }
 
+  async function readApiPayload(response: Response): Promise<{ payload: Record<string, unknown> | null; text: string }> {
+    const text = await response.text();
+    if (!text) {
+      return { payload: null, text: "" };
+    }
+
+    try {
+      const parsed = JSON.parse(text);
+      if (parsed && typeof parsed === "object") {
+        return { payload: parsed as Record<string, unknown>, text };
+      }
+      return { payload: null, text };
+    } catch {
+      return { payload: null, text };
+    }
+  }
+
   async function createTenant() {
     if (!canCreateTenant || isSubmitting) return;
     setIsSubmitting(true);
@@ -183,13 +200,22 @@ export default function PlatformOnboardPage() {
         })
       });
 
-      const payload = await response.json();
+      const { payload, text } = await readApiPayload(response);
       if (!response.ok) {
-        throw new Error(payload.error ?? "Failed to create tenant");
+        const message =
+          (payload && typeof payload.error === "string" && payload.error)
+          || text
+          || `Failed to create tenant (HTTP ${response.status})`;
+        throw new Error(message);
       }
 
-      setTenant(payload.tenant);
-      setPlatformAlias(buildAliasForTenant(payload.tenant));
+      const createdTenant = payload?.tenant as CreatedTenant | undefined;
+      if (!createdTenant) {
+        throw new Error("Tenant API returned an empty response.");
+      }
+
+      setTenant(createdTenant);
+      setPlatformAlias(buildAliasForTenant(createdTenant));
       setCopyMessage("");
       setStage("domain");
     } catch (err) {
@@ -229,14 +255,18 @@ export default function PlatformOnboardPage() {
         })
       });
 
-      const payload = await response.json();
+      const { payload, text } = await readApiPayload(response);
       if (!response.ok) {
-        throw new Error(payload.error ?? "Failed to create domain");
+        const message =
+          (payload && typeof payload.error === "string" && payload.error)
+          || text
+          || `Failed to create domain (HTTP ${response.status})`;
+        throw new Error(message);
       }
 
-      setCreatedDomain(payload.domain ?? null);
-      setVerification(payload.verification ?? []);
-      setVerificationMessage(payload.verified ? "Domain already verified" : "Verification required");
+      setCreatedDomain((payload?.domain as CreatedDomain | null | undefined) ?? null);
+      setVerification((payload?.verification as DomainVerificationRecord[] | undefined) ?? []);
+      setVerificationMessage(payload?.verified ? "Domain already verified" : "Verification required");
       setStage("done");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create domain");
@@ -264,14 +294,18 @@ export default function PlatformOnboardPage() {
         }
       );
 
-      const payload = await response.json();
+      const { payload, text } = await readApiPayload(response);
       if (!response.ok) {
-        throw new Error(payload.error ?? "Failed to verify domain");
+        const message =
+          (payload && typeof payload.error === "string" && payload.error)
+          || text
+          || `Failed to verify domain (HTTP ${response.status})`;
+        throw new Error(message);
       }
 
-      setVerification(payload.verification ?? []);
-      setCreatedDomain(payload.domain ?? createdDomain);
-      setVerificationMessage(payload.message ?? "Verification checked");
+      setVerification((payload?.verification as DomainVerificationRecord[] | undefined) ?? []);
+      setCreatedDomain((payload?.domain as CreatedDomain | undefined) ?? createdDomain);
+      setVerificationMessage((payload?.message as string | undefined) ?? "Verification checked");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to verify domain");
     } finally {
