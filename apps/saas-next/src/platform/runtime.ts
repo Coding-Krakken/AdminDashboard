@@ -62,6 +62,7 @@ export async function resolveTenantFromRequest(request: Request): Promise<Tenant
   const hostname = request.headers.get("x-tenant-hostname")
     ?? request.headers.get("host")
     ?? "";
+  const aliasTenantId = request.headers.get("x-tenant-id");
 
   const mode = request.headers.get("x-tenant-mode");
 
@@ -69,7 +70,9 @@ export async function resolveTenantFromRequest(request: Request): Promise<Tenant
     return null; // Platform routes don't need tenant context
   }
 
-  const tenant = await tenantService.resolveByDomain(hostname);
+  const tenant = aliasTenantId
+    ? await tenantService.resolveById(aliasTenantId)
+    : await tenantService.resolveByDomain(hostname);
   if (!tenant) return null;
 
   const runtimeConfig = await loadTenantRuntimeConfig(tenantService, tenant.id);

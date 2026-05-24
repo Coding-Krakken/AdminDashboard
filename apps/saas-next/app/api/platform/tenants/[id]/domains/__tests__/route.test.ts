@@ -6,6 +6,9 @@ const mocks = vi.hoisted(() => {
     tenant: {
       findUnique: vi.fn()
     },
+    tenantConfig: {
+      update: vi.fn()
+    },
     tenantDomain: {
       findMany: vi.fn(),
       findUnique: vi.fn(),
@@ -106,5 +109,30 @@ describe("platform tenant domains route", () => {
       where: { domain: "example.com" }
     });
     expect(mocks.addCustomDomain).toHaveBeenCalledWith("example.com");
+    expect(mocks.prisma.tenantConfig.update).toHaveBeenCalledWith({
+      where: { tenantId: "tenant-1" },
+      data: { preferredAccessStrategy: "DOMAIN" }
+    });
+  });
+
+  it("supports alias-only access mode without creating a domain", async () => {
+    mocks.prisma.tenant.findUnique.mockResolvedValue({ id: "tenant-1" });
+
+    const response = await POST(
+      makeRequest("POST", { accessStrategy: "api-alias", isPrimary: true }),
+      { params }
+    );
+    const payload = await response.json();
+
+    expect(response.status).toBe(201);
+    expect(payload.accessStrategy).toBe("api-alias");
+    expect(payload.apiAliasPath).toBe("/api/platform/route/tenant-1");
+    expect(payload.domain).toBeNull();
+    expect(mocks.addCustomDomain).not.toHaveBeenCalled();
+    expect(mocks.prisma.tenantDomain.create).not.toHaveBeenCalled();
+    expect(mocks.prisma.tenantConfig.update).toHaveBeenCalledWith({
+      where: { tenantId: "tenant-1" },
+      data: { preferredAccessStrategy: "API_ALIAS" }
+    });
   });
 });

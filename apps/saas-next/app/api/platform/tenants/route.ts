@@ -8,6 +8,7 @@ const CreateTenantSchema = z.object({
   slug: z.string().min(2).max(64).regex(/^[a-z0-9-]+$/),
   name: z.string().min(1).max(256),
   businessProfile: z.string().default("generic"),
+  preferredAccessStrategy: z.enum(["DOMAIN", "API_ALIAS", "BOTH"]).default("DOMAIN"),
   authProvider: z.string().default("platform"),
   authConfig: z.record(z.unknown()).default({}),
   dashboardConfig: z.object({
@@ -65,7 +66,16 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { slug, name, businessProfile, authProvider, authConfig, dashboardConfig, theme } = parsed.data;
+  const {
+    slug,
+    name,
+    businessProfile,
+    preferredAccessStrategy,
+    authProvider,
+    authConfig,
+    dashboardConfig,
+    theme
+  } = parsed.data;
 
   const existing = await prisma.tenant.findUnique({ where: { slug } });
   if (existing) {
@@ -85,7 +95,8 @@ export async function POST(request: NextRequest) {
           dashboardConfig: dashboardConfig as object,
           authProvider,
           authConfig: authConfig as object,
-          businessProfile
+          businessProfile,
+          preferredAccessStrategy
         }
       },
       theme: {

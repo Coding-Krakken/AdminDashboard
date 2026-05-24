@@ -77,6 +77,7 @@ The generated kit also includes `theme.tokens.json` and `profile.recommendation.
 Run the multi-tenant SaaS app locally:
 
 1. Copy `apps/saas-next/.env.example` to `apps/saas-next/.env.local`
+	- Preferred: `cp apps/saas-next/.env.local.example apps/saas-next/.env.local`
 2. Run Prisma generate/migrate: `npm run db:generate && npm run db:migrate`
 3. Start SaaS app: `npm run dev:saas`
 4. Validate SaaS tests: `npm run test:saas`

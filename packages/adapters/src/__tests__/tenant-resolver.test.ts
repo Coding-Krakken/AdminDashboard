@@ -96,4 +96,20 @@ describe("tenant-resolver", () => {
     expect(config?.authProvider).toBe("platform");
     expect(theme?.tokens["color-primary"]).toBe("#00ff99");
   });
+
+  it("returns null for suspended tenant id resolution", async () => {
+    const store = createMockStore();
+    const resolver = createTenantResolver(store);
+
+    vi.mocked(store.findTenantById).mockResolvedValueOnce({
+      id: "tenant-suspended",
+      slug: "suspended",
+      name: "Suspended",
+      status: "SUSPENDED"
+    });
+
+    const tenant = await resolver.resolveById("tenant-suspended");
+
+    expect(tenant).toBeNull();
+  });
 });

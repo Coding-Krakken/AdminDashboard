@@ -4,6 +4,11 @@
 
 Deploy `apps/saas-next` as the multi-tenant SaaS control plane while keeping `apps/starter-next` available as the self-hosted path.
 
+This deployment supports two onboarding access methods:
+
+- Custom domain/subdomain onboarding (DNS verification)
+- Platform API route alias onboarding (`/api/platform/route/{tenantId}`) for free `*.vercel.app` project URLs
+
 ## Prerequisites
 
 - Vercel project created with root directory `apps/saas-next`.
@@ -29,7 +34,8 @@ Optional rate limiting overrides:
 - `PLATFORM_API_RATE_LIMIT_MAX` (default `120`)
 - `PLATFORM_API_RATE_LIMIT_WINDOW_MS` (default `60000`)
 
-Reference: `apps/saas-next/.env.example`
+Local template reference: `apps/saas-next/.env.local.example`
+Compatibility example: `apps/saas-next/.env.example`
 
 ## Local Readiness Validation
 
@@ -63,6 +69,7 @@ For non-migration workflows (preview/dev), use `npm run db:push`.
 
 - Known platform hosts and platform paths route to platform mode.
 - Custom hosts route to tenant mode with normalized hostname.
+- Tenant alias paths (`/api/platform/route/{tenantId}`) rewrite to tenant routes and resolve tenant context by `x-tenant-id`.
 - Unknown tenant-host requests in tenant mode return 404.
 
 ## Automated Smoke Verification
@@ -75,6 +82,12 @@ The smoke checker validates this sequence:
 4. `POST /api/platform/tenants/{id}/domains`
 5. `POST /api/platform/tenants/{id}/domains/{domainId}/verify`
 6. `DELETE /api/platform/tenants/{id}` (cleanup by default)
+
+Alias-mode verification (manual):
+
+1. Create tenant with `POST /api/platform/tenants`
+2. Generate alias-only onboarding metadata with `POST /api/platform/tenants/{id}/domains` and body `{ "accessStrategy": "api-alias" }`
+3. Open `/api/platform/route/{tenantId}` and confirm tenant dashboard renders
 
 Useful flags:
 

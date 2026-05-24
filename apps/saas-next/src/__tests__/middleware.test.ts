@@ -11,6 +11,18 @@ function makeRequest(url: string, host: string): NextRequest {
 }
 
 describe("saas middleware tenant routing", () => {
+  it("rewrites platform alias path to tenant route and injects tenant id", () => {
+    const request = makeRequest(
+      "https://admin-dashboard.vercel.app/api/platform/route/tenant-1/settings?tab=security",
+      "admin-dashboard.vercel.app"
+    );
+    const response = middleware(request);
+
+    expect(response.headers.get("x-middleware-rewrite")).toContain("/settings?tab=security");
+    expect(response.headers.get("x-middleware-request-x-tenant-mode")).toBe("tenant");
+    expect(response.headers.get("x-middleware-request-x-tenant-id")).toBe("tenant-1");
+  });
+
   it("bypasses tenant header injection for platform admin paths", () => {
     const request = makeRequest("http://localhost:3000/_platform", "localhost:3000");
     const response = middleware(request);

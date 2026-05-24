@@ -29,6 +29,7 @@ export interface TenantDomainRecord {
   domain: string;
   verified: boolean;
   isPrimary: boolean;
+  accessStrategy?: "DOMAIN" | "API_ALIAS" | "BOTH";
 }
 
 export interface TenantResolver {
@@ -149,7 +150,11 @@ export function createTenantResolver(
     },
 
     async resolveById(id: string): Promise<TenantRecord | null> {
-      return store.findTenantById(id);
+      const result = await store.findTenantById(id);
+      if (!result || result.status !== "ACTIVE") {
+        return null;
+      }
+      return result;
     },
 
     async loadConfig(tenantId: string): Promise<TenantConfigRecord | null> {

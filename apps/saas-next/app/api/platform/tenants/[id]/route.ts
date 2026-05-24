@@ -9,6 +9,7 @@ const UpdateTenantSchema = z.object({
   name: z.string().min(1).max(256).optional(),
   status: z.enum(["ACTIVE", "SUSPENDED", "PROVISIONING"]).optional(),
   businessProfile: z.string().optional(),
+  preferredAccessStrategy: z.enum(["DOMAIN", "API_ALIAS", "BOTH"]).optional(),
   authProvider: z.string().optional(),
   authConfig: z.record(z.unknown()).optional(),
   dashboardConfig: z.object({
@@ -71,7 +72,16 @@ export async function PATCH(
     return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
   }
 
-  const { name, status, businessProfile, authProvider, authConfig, dashboardConfig, theme } = parsed.data;
+  const {
+    name,
+    status,
+    businessProfile,
+    preferredAccessStrategy,
+    authProvider,
+    authConfig,
+    dashboardConfig,
+    theme
+  } = parsed.data;
 
   const tenant = await prisma.$transaction(async (tx) => {
     if (name || status) {
@@ -81,9 +91,10 @@ export async function PATCH(
       });
     }
 
-    if (businessProfile || authProvider || authConfig || dashboardConfig) {
+    if (businessProfile || preferredAccessStrategy || authProvider || authConfig || dashboardConfig) {
       const configUpdate: Record<string, unknown> = {};
       if (businessProfile) configUpdate.businessProfile = businessProfile;
+      if (preferredAccessStrategy) configUpdate.preferredAccessStrategy = preferredAccessStrategy;
       if (authProvider) configUpdate.authProvider = authProvider;
       if (authConfig) configUpdate.authConfig = authConfig;
       if (dashboardConfig) configUpdate.dashboardConfig = dashboardConfig;

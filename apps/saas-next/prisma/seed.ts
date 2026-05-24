@@ -23,7 +23,8 @@ async function main() {
           },
           authProvider: "platform",
           authConfig: {},
-          businessProfile: "generic"
+          businessProfile: "generic",
+          preferredAccessStrategy: "DOMAIN"
         }
       },
       theme: {
@@ -40,7 +41,8 @@ async function main() {
         create: {
           domain: "demo.localhost",
           verified: true,
-          isPrimary: true
+          isPrimary: true,
+          accessStrategy: "DOMAIN"
         }
       }
     }

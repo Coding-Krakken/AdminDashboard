@@ -98,8 +98,64 @@ const spec = {
       post: {
         summary: "Create tenant domain",
         parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  domain: { type: "string", description: "Required for domain and both strategies" },
+                  isPrimary: { type: "boolean", default: false },
+                  accessStrategy: {
+                    type: "string",
+                    enum: ["domain", "api-alias", "both"],
+                    default: "domain"
+                  }
+                }
+              }
+            }
+          }
+        },
         responses: {
-          "201": { description: "Domain created" },
+          "201": {
+            description: "Domain created or alias configured",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    domain: {
+                      anyOf: [
+                        { type: "null" },
+                        {
+                          type: "object",
+                          properties: {
+                            id: { type: "string" },
+                            tenantId: { type: "string" },
+                            domain: { type: "string" },
+                            verified: { type: "boolean" },
+                            isPrimary: { type: "boolean" },
+                            accessStrategy: {
+                              type: "string",
+                              enum: ["DOMAIN", "API_ALIAS", "BOTH"]
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    apiAliasPath: { type: "string" },
+                    accessStrategy: {
+                      type: "string",
+                      enum: ["domain", "api-alias", "both"]
+                    },
+                    verified: { type: "boolean" },
+                    message: { type: "string" }
+                  }
+                }
+              }
+            }
+          },
           "400": { description: "Validation failed" },
           "401": { description: "Unauthorized" },
           "404": { description: "Tenant not found" },

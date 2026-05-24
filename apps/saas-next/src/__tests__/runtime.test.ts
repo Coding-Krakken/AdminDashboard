@@ -4,6 +4,7 @@ const mocks = vi.hoisted(() => {
   const adapterGetCurrentUser = vi.fn();
   return {
     resolveByDomain: vi.fn(),
+    resolveById: vi.fn(),
     loadTenantRuntimeConfig: vi.fn(),
     loadTenantPresentationConfig: vi.fn(),
     extractUserFromRequestHeaders: vi.fn(),
@@ -23,7 +24,10 @@ vi.mock("@/platform/tenant-store", () => ({
 }));
 
 vi.mock("@universal-admin/adapters", () => ({
-  createTenantResolver: vi.fn(() => ({ resolveByDomain: mocks.resolveByDomain })),
+  createTenantResolver: vi.fn(() => ({
+    resolveByDomain: mocks.resolveByDomain,
+    resolveById: mocks.resolveById
+  })),
   loadTenantRuntimeConfig: mocks.loadTenantRuntimeConfig,
   loadTenantPresentationConfig: mocks.loadTenantPresentationConfig,
   extractUserFromRequestHeaders: mocks.extractUserFromRequestHeaders,
@@ -38,6 +42,12 @@ describe("saas runtime tenant auth resolution", () => {
     vi.clearAllMocks();
 
     mocks.resolveByDomain.mockResolvedValue({
+      id: "tenant-1",
+      slug: "alpha",
+      name: "Alpha",
+      status: "ACTIVE"
+    });
+    mocks.resolveById.mockResolvedValue({
       id: "tenant-1",
       slug: "alpha",
       name: "Alpha",
@@ -134,5 +144,18 @@ describe("saas runtime tenant auth resolution", () => {
       expect.objectContaining({ provider: "platform" }),
       "tenant-1"
     );
+  });
+
+  it("resolves tenant by x-tenant-id when alias header is present", async () => {
+    const request = createRequestFromHeaderEntries([
+      ["host", "admin-dashboard.vercel.app"],
+      ["x-tenant-id", "tenant-1"]
+    ]);
+
+    const tenantCtx = await resolveTenantFromRequest(request);
+
+    expect(tenantCtx?.tenant.id).toBe("tenant-1");
+    expect(mocks.resolveById).toHaveBeenCalledWith("tenant-1");
+    expect(mocks.resolveByDomain).not.toHaveBeenCalled();
   });
 });

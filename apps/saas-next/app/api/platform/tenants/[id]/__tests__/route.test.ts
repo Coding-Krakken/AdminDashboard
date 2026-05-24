@@ -132,6 +132,39 @@ describe("platform tenant by id route", () => {
     expect(response.status).toBe(200);
     expect(payload.tenant.name).toBe("Updated");
     expect(mocks.prisma.$transaction).toHaveBeenCalledTimes(1);
+    expect(mocks.prisma.__tx.tenantConfig.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { tenantId: "tenant-1" },
+        data: expect.objectContaining({
+          authProvider: "platform"
+        })
+      })
+    );
+  });
+
+  it("updates preferredAccessStrategy on tenant config", async () => {
+    mocks.prisma.tenant.findUnique.mockResolvedValue({ id: "tenant-1" });
+    mocks.prisma.$transaction.mockImplementation(async (fn: (tx: typeof mocks.prisma.__tx) => Promise<unknown>) => {
+      mocks.prisma.__tx.tenant.findUnique.mockResolvedValue({ id: "tenant-1", name: "Updated", domains: [] });
+      return fn(mocks.prisma.__tx);
+    });
+
+    const response = await PATCH(
+      makeRequest("PATCH", {
+        preferredAccessStrategy: "API_ALIAS"
+      }),
+      { params }
+    );
+
+    expect(response.status).toBe(200);
+    expect(mocks.prisma.__tx.tenantConfig.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { tenantId: "tenant-1" },
+        data: expect.objectContaining({
+          preferredAccessStrategy: "API_ALIAS"
+        })
+      })
+    );
   });
 
   it("returns 404 when delete target tenant does not exist", async () => {

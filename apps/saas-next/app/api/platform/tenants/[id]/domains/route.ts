@@ -5,9 +5,35 @@ import { addCustomDomain } from "@/platform/domain-manager";
 import { enforcePlatformAccess } from "@/platform/platform-auth";
 import { z } from "zod";
 
+const AccessStrategySchema = z.enum(["domain", "api-alias", "both"]);
+const DomainPattern = /^[a-z0-9.-]+\.[a-z]{2,}$/;
+
+function toPrismaAccessStrategy(strategy: z.infer<typeof AccessStrategySchema>) {
+  if (strategy === "api-alias") {
+    return "API_ALIAS" as const;
+  }
+  if (strategy === "both") {
+    return "BOTH" as const;
+  }
+  return "DOMAIN" as const;
+}
+
 const AddDomainSchema = z.object({
-  domain: z.string().min(3).max(253).regex(/^[a-z0-9.-]+\.[a-z]{2,}$/),
-  isPrimary: z.boolean().default(false)
+  domain: z.string().min(3).max(253).optional(),
+  isPrimary: z.boolean().default(false),
+  accessStrategy: AccessStrategySchema.optional().default("domain")
+}).superRefine((data, ctx) => {
+  if (data.accessStrategy === "api-alias") {
+    return;
+  }
+
+  if (!data.domain || !DomainPattern.test(data.domain)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["domain"],
+      message: "A valid domain is required for domain-based onboarding"
+    });
+  }
 });
 
 export async function GET(
@@ -56,7 +82,32 @@ export async function POST(
     return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
   }
 
+  const apiAliasPath = `/api/platform/route/${id}`;
+  const prismaAccessStrategy = toPrismaAccessStrategy(parsed.data.accessStrategy);
+
+  if (parsed.data.accessStrategy === "api-alias") {
+    await prisma.tenantConfig.update({
+      where: { tenantId: id },
+      data: { preferredAccessStrategy: prismaAccessStrategy }
+    });
+
+    return NextResponse.json(
+      {
+        domain: null,
+        verification: [],
+        verified: true,
+        accessStrategy: parsed.data.accessStrategy,
+        apiAliasPath,
+        message: "Platform API alias mode enabled"
+      },
+      { status: 201 }
+    );
+  }
+
   const normalizedDomain = parsed.data.domain;
+  if (!normalizedDomain) {
+    return NextResponse.json({ error: "Domain is required" }, { status: 400 });
+  }
 
   const existingDomain = await prisma.tenantDomain.findUnique({
     where: { domain: normalizedDomain }
@@ -76,15 +127,23 @@ export async function POST(
       domain: normalizedDomain,
       isPrimary: parsed.data.isPrimary,
       verified: domainResult.verified,
-      vercelDomainId: domainResult.vercelDomainId
+      vercelDomainId: domainResult.vercelDomainId,
+      accessStrategy: prismaAccessStrategy
     }
+  });
+
+  await prisma.tenantConfig.update({
+    where: { tenantId: id },
+    data: { preferredAccessStrategy: prismaAccessStrategy }
   });
 
   return NextResponse.json(
     {
       domain,
       verification: domainResult.verification,
-      verified: domainResult.verified
+      verified: domainResult.verified,
+      accessStrategy: parsed.data.accessStrategy,
+      apiAliasPath
     },
     { status: 201 }
   );

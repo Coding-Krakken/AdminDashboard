@@ -10,6 +10,9 @@ describe("platform openapi route", () => {
     expect(payload.openapi).toBe("3.1.0");
     expect(payload.paths["/api/platform/health"]?.get).toBeDefined();
     expect(payload.paths["/api/platform/tenants"]).toBeDefined();
+    expect(
+      payload.paths["/api/platform/tenants/{id}/domains"].post.requestBody.content["application/json"]
+    ).toBeDefined();
     expect(payload.paths["/api/platform/tenants/{id}/domains/{domainId}"]?.delete).toBeDefined();
     expect(payload.paths["/api/platform/tenants/{id}/domains/{domainId}/verify"]?.post).toBeDefined();
     expect(payload.components.securitySchemes.bearerAuth).toBeDefined();

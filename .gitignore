@@ -9,3 +9,5 @@ dist
 **/.runtime-data.json
 **/.runtime-audit.json
 artifacts/migrations/
+.vercel
+.env*.local

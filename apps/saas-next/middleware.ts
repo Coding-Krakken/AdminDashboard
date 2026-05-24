@@ -7,12 +7,34 @@ const PLATFORM_HOSTS = new Set([
   "admin-dashboard.vercel.app"
 ]);
 
+const TENANT_ALIAS_PREFIX = "/api/platform/route/";
 const PLATFORM_ADMIN_PATHS = ["/api/platform", "/_platform"];
 
 export function middleware(request: NextRequest) {
   const hostname = request.headers.get("host") ?? "localhost";
   const normalizedHost = hostname.toLowerCase().replace(/:\d+$/, "");
   const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith(TENANT_ALIAS_PREFIX)) {
+    const suffix = pathname.slice(TENANT_ALIAS_PREFIX.length);
+    const [tenantId, ...rest] = suffix.split("/");
+
+    if (!tenantId) {
+      return NextResponse.next();
+    }
+
+    const headers = new Headers(request.headers);
+    headers.set("x-tenant-mode", "tenant");
+    headers.set("x-tenant-id", tenantId);
+
+    const rewriteUrl = request.nextUrl.clone();
+    const tenantPath = rest.length > 0 ? `/${rest.join("/")}` : "/";
+    rewriteUrl.pathname = tenantPath;
+
+    return NextResponse.rewrite(rewriteUrl, {
+      request: { headers }
+    });
+  }
 
   // Platform admin routes bypass tenant resolution
   if (PLATFORM_ADMIN_PATHS.some((p) => pathname.startsWith(p))) {

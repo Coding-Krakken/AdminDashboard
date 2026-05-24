@@ -102,5 +102,47 @@ describe("platform tenants route", () => {
     expect(response.status).toBe(201);
     expect(payload.tenant.id).toBe("tenant-new");
     expect(mocks.prisma.tenant.create).toHaveBeenCalledTimes(1);
+    expect(mocks.prisma.tenant.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          config: {
+            create: expect.objectContaining({
+              preferredAccessStrategy: "DOMAIN"
+            })
+          }
+        })
+      })
+    );
+  });
+
+  it("creates tenant with explicit preferredAccessStrategy", async () => {
+    mocks.prisma.tenant.findUnique.mockResolvedValue(null);
+    mocks.prisma.tenant.create.mockResolvedValue({
+      id: "tenant-strategy",
+      slug: "beta",
+      name: "Beta",
+      domains: []
+    });
+
+    const response = await POST(
+      makeRequest("POST", {
+        slug: "beta",
+        name: "Beta",
+        preferredAccessStrategy: "BOTH"
+      })
+    );
+
+    expect(response.status).toBe(201);
+    expect(mocks.prisma.tenant.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          config: {
+            create: expect.objectContaining({
+              preferredAccessStrategy: "BOTH"
+            })
+          }
+        })
+      })
+    );
   });
 });

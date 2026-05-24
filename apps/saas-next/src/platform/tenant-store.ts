@@ -76,7 +76,8 @@ export function createPrismaTenantStore(prisma: PrismaClient): TenantStoreDelega
         tenantId: r.tenantId,
         domain: r.domain,
         verified: r.verified,
-        isPrimary: r.isPrimary
+        isPrimary: r.isPrimary,
+        accessStrategy: r.accessStrategy
       }));
     }
   };

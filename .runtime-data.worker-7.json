@@ -3,7 +3,7 @@
     "userId": "starter-owner",
     "tenantId": "default-tenant",
     "role": "owner",
-    "at": "2026-05-24T03:38:55.335Z"
+    "at": "2026-05-24T03:36:36.857Z"
   },
   "runtime:dashboardLayouts:default-tenant": {
     "starter-owner": {
@@ -14,10 +14,7 @@
         "ops.incidents"
       ],
       "columns": 6,
-      "updatedAt": "2026-05-24T00:59:21.334Z"
+      "updatedAt": "2026-05-24T03:36:36.884Z"
     }
-  },
-  "runtime:healthProbe:default-tenant": {
-    "at": "2026-05-24T03:38:55.575Z"
   }
 }
