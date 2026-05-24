@@ -189,3 +189,6 @@ export * from "./prisma";
 export * from "./auth-providers";
 export * from "./auth-detector";
 export * from "./environment";
+export * from "./tenant-resolver";
+export * from "./tenant-auth";
+export * from "./tenant-config-loader";

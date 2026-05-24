@@ -19,3 +19,5 @@ export function toCssVariables(tokens: ThemeTokens): string {
     .map(([key, value]) => `--${key}: ${value};`)
     .join("\n");
 }
+
+export * from "./extract";

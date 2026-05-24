@@ -1,0 +1,20 @@
+{
+  "runtime:lastContext:default-tenant": {
+    "userId": "starter-owner",
+    "tenantId": "default-tenant",
+    "role": "owner",
+    "at": "2026-05-24T00:29:04.992Z"
+  },
+  "runtime:dashboardLayouts:default-tenant": {
+    "starter-owner": {
+      "userId": "starter-owner",
+      "profileId": "commerce",
+      "widgets": [
+        "kpi.revenue",
+        "ops.incidents"
+      ],
+      "columns": 6,
+      "updatedAt": "2026-05-24T00:29:04.997Z"
+    }
+  }
+}

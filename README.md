@@ -70,6 +70,21 @@ The generated kit also includes `theme.tokens.json` and `profile.recommendation.
 
 10. Verify migration readiness artifacts: `npm run verify:migration-readiness`
 11. Run migration backfill dry-run: `npm run migrate:backfill-runtime`
+12. Run SaaS smoke check against a deployment: `npm run verify:saas-smoke -- --base-url=https://your-saas-domain`
+
+## SaaS Quick Start
+
+Run the multi-tenant SaaS app locally:
+
+1. Copy `apps/saas-next/.env.example` to `apps/saas-next/.env.local`
+2. Run Prisma generate/migrate: `npm run db:generate && npm run db:migrate`
+3. Start SaaS app: `npm run dev:saas`
+4. Validate SaaS tests: `npm run test:saas`
+5. Run endpoint smoke check: `npm run verify:saas-smoke -- --base-url=http://localhost:3000 --platform-secret=<secret>`
+
+Operational runbook:
+
+- `docs/saas-vercel-runbook.md`
 
 ## Implemented Highlights
 
@@ -115,6 +130,7 @@ The generated kit also includes `theme.tokens.json` and `profile.recommendation.
 - `docs/migrations/starter-to-saas-playbook.md`: end-to-end starter to SaaS migration and cutover plan.
 - `docs/migrations/runtime-state-backfill.md`: deterministic data backfill procedure and integrity checks.
 - `docs/migrations/rollback-runbook.md`: rollback triggers, immediate response actions, and recovery flow.
+- `docs/saas-vercel-runbook.md`: SaaS deployment and verification workflow for Vercel.
 - `scripts/backfill-runtime-state.mjs`: executable backfill utility with dry-run mode and signed report artifact output.
 
 ## Starter Admin APIs

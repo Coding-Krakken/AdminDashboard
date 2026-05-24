@@ -6,9 +6,9 @@
         "refreshIntervalSeconds": 120
       },
       "__uaMeta": {
-        "version": 6,
+        "version": 25,
         "schemaVersion": 1,
-        "updatedAt": "2026-05-23T18:57:00.196Z",
+        "updatedAt": "2026-05-24T00:29:04.967Z",
         "updatedBy": "starter-owner"
       }
     }
@@ -20,9 +20,9 @@
         "refreshIntervalSeconds": 30
       },
       "__uaMeta": {
-        "version": 6,
+        "version": 25,
         "schemaVersion": 1,
-        "updatedAt": "2026-05-23T18:57:00.210Z",
+        "updatedAt": "2026-05-24T00:29:04.973Z",
         "updatedBy": "starter-owner"
       }
     }
@@ -766,6 +766,2324 @@
       "version": 1,
       "nextRunAt": "2026-05-23T19:57:00.297Z",
       "updatedAt": "2026-05-23T18:57:00.299Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779580658050": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-23T23:57:38.050Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779580658121": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-23T23:57:38.122Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779580658121": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-23T23:57:38.176Z",
+      "error": null,
+      "at": "2026-05-23T23:57:38.175Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779580658336": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-23T23:57:38.336Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779580658336": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-23T23:57:38.350Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779580658384": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-23T23:57:38.385Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779580658384": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-23T23:57:38.413Z",
+      "error": null,
+      "at": "2026-05-23T23:57:38.412Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-23T23:57:38.458Z",
+      "error": null,
+      "at": "2026-05-23T23:57:38.458Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779580658467": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779580658590": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-23T23:57:38.591Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779580658736": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T00:57:38.736Z",
+      "updatedAt": "2026-05-23T23:57:38.737Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779580962098": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:02:42.098Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779580962105": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:02:42.106Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779580962105": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:02:42.115Z",
+      "error": null,
+      "at": "2026-05-24T00:02:42.114Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779580962127": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:02:42.128Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779580962127": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:02:42.132Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779580962136": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:02:42.137Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779580962136": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:02:42.141Z",
+      "error": null,
+      "at": "2026-05-24T00:02:42.141Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:02:42.145Z",
+      "error": null,
+      "at": "2026-05-24T00:02:42.145Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779580962158": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779580962174": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:02:42.178Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779580962190": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:02:42.190Z",
+      "updatedAt": "2026-05-24T00:02:42.191Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581125403": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:05:25.403Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581125410": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:05:25.411Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581125410": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:05:25.421Z",
+      "error": null,
+      "at": "2026-05-24T00:05:25.420Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581125429": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:05:25.429Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581125429": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:05:25.433Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581125436": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:05:25.437Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581125436": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:05:25.441Z",
+      "error": null,
+      "at": "2026-05-24T00:05:25.441Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:05:25.444Z",
+      "error": null,
+      "at": "2026-05-24T00:05:25.444Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581125451": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581125464": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:05:25.465Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581125470": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:05:25.470Z",
+      "updatedAt": "2026-05-24T00:05:25.470Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581203217": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:06:43.218Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581203224": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:06:43.226Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581203224": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:06:43.234Z",
+      "error": null,
+      "at": "2026-05-24T00:06:43.234Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581203244": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:06:43.245Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581203244": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:06:43.248Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581203252": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:06:43.253Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581203252": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:06:43.257Z",
+      "error": null,
+      "at": "2026-05-24T00:06:43.257Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:06:43.261Z",
+      "error": null,
+      "at": "2026-05-24T00:06:43.261Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581203267": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581203281": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:06:43.282Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581203287": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:06:43.287Z",
+      "updatedAt": "2026-05-24T00:06:43.288Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581402309": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:10:02.311Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581402331": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:10:02.336Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581402331": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:10:02.347Z",
+      "error": null,
+      "at": "2026-05-24T00:10:02.346Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581402355": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:10:02.356Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581402355": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:10:02.360Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581402363": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:10:02.364Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581402363": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:10:02.368Z",
+      "error": null,
+      "at": "2026-05-24T00:10:02.368Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:10:02.372Z",
+      "error": null,
+      "at": "2026-05-24T00:10:02.372Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581402380": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581402396": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:10:02.397Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581402403": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:10:02.403Z",
+      "updatedAt": "2026-05-24T00:10:02.404Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581475323": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:11:15.326Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581475333": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:11:15.334Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581475333": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:11:15.361Z",
+      "error": null,
+      "at": "2026-05-24T00:11:15.360Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581475380": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:11:15.381Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581475380": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:11:15.393Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581475398": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:11:15.403Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581475398": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:11:15.417Z",
+      "error": null,
+      "at": "2026-05-24T00:11:15.416Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:11:15.431Z",
+      "error": null,
+      "at": "2026-05-24T00:11:15.431Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581475450": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581475474": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:11:15.475Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581475481": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:11:15.481Z",
+      "updatedAt": "2026-05-24T00:11:15.486Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581498652": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:11:38.655Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581498671": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:11:38.672Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581498671": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:11:38.688Z",
+      "error": null,
+      "at": "2026-05-24T00:11:38.688Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581498696": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:11:38.696Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581498696": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:11:38.703Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581498706": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:11:38.707Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581498706": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:11:38.715Z",
+      "error": null,
+      "at": "2026-05-24T00:11:38.715Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:11:38.721Z",
+      "error": null,
+      "at": "2026-05-24T00:11:38.721Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581498729": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581498751": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:11:38.752Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581498757": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:11:38.757Z",
+      "updatedAt": "2026-05-24T00:11:38.758Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581635611": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:13:55.616Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581635626": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:13:55.628Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581635626": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:13:55.640Z",
+      "error": null,
+      "at": "2026-05-24T00:13:55.639Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581635648": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:13:55.649Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581635648": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:13:55.655Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581635659": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:13:55.660Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581635659": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:13:55.667Z",
+      "error": null,
+      "at": "2026-05-24T00:13:55.667Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:13:55.673Z",
+      "error": null,
+      "at": "2026-05-24T00:13:55.673Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581635680": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581635705": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:13:55.706Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581635724": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:13:55.724Z",
+      "updatedAt": "2026-05-24T00:13:55.727Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581785108": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:16:25.109Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581785118": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:16:25.119Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581785118": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:16:25.133Z",
+      "error": null,
+      "at": "2026-05-24T00:16:25.133Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581785146": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:16:25.147Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581785146": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:16:25.151Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581785155": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:16:25.156Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581785155": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:16:25.160Z",
+      "error": null,
+      "at": "2026-05-24T00:16:25.160Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:16:25.164Z",
+      "error": null,
+      "at": "2026-05-24T00:16:25.164Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581785173": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581785215": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:16:25.218Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581785238": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:16:25.238Z",
+      "updatedAt": "2026-05-24T00:16:25.240Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581807538": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:16:47.540Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581807556": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:16:47.559Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581807556": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:16:47.574Z",
+      "error": null,
+      "at": "2026-05-24T00:16:47.573Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581807591": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:16:47.592Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581807591": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:16:47.597Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581807601": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:16:47.602Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581807601": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:16:47.607Z",
+      "error": null,
+      "at": "2026-05-24T00:16:47.607Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:16:47.612Z",
+      "error": null,
+      "at": "2026-05-24T00:16:47.612Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581807620": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581807653": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:16:47.656Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581807662": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:16:47.662Z",
+      "updatedAt": "2026-05-24T00:16:47.663Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581910578": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:18:30.580Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581910684": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:18:30.686Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581910684": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:18:30.743Z",
+      "error": null,
+      "at": "2026-05-24T00:18:30.743Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581910791": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:18:30.792Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581910791": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:18:30.798Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581910805": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:18:30.806Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581910805": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:18:30.853Z",
+      "error": null,
+      "at": "2026-05-24T00:18:30.853Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:18:30.905Z",
+      "error": null,
+      "at": "2026-05-24T00:18:30.905Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581910916": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581910987": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:18:30.988Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581911249": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:18:31.249Z",
+      "updatedAt": "2026-05-24T00:18:31.254Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581922837": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:18:42.839Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581922904": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:18:42.909Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581922904": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:18:42.972Z",
+      "error": null,
+      "at": "2026-05-24T00:18:42.971Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581923063": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:18:43.064Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581923063": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:18:43.081Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581923127": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:18:43.131Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581923127": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:18:43.205Z",
+      "error": null,
+      "at": "2026-05-24T00:18:43.205Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:18:43.284Z",
+      "error": null,
+      "at": "2026-05-24T00:18:43.284Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581923438": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581923633": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:18:43.636Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581923657": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:18:43.657Z",
+      "updatedAt": "2026-05-24T00:18:43.658Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779581954053": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:19:14.055Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779581954068": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:19:14.071Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779581954068": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:19:14.088Z",
+      "error": null,
+      "at": "2026-05-24T00:19:14.087Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779581954156": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:19:14.157Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779581954156": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:19:14.163Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779581954169": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:19:14.170Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779581954169": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:19:14.177Z",
+      "error": null,
+      "at": "2026-05-24T00:19:14.177Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:19:14.184Z",
+      "error": null,
+      "at": "2026-05-24T00:19:14.183Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779581954208": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779581954238": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:19:14.239Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779581954251": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:19:14.251Z",
+      "updatedAt": "2026-05-24T00:19:14.253Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779582013917": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:20:13.918Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779582013929": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:20:13.930Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779582013929": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:20:13.942Z",
+      "error": null,
+      "at": "2026-05-24T00:20:13.942Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779582013956": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:20:13.958Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779582013956": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:20:13.970Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779582013973": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:20:13.974Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779582013973": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:20:13.980Z",
+      "error": null,
+      "at": "2026-05-24T00:20:13.980Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:20:13.985Z",
+      "error": null,
+      "at": "2026-05-24T00:20:13.985Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779582013994": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779582014015": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:20:14.016Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779582014024": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:20:14.024Z",
+      "updatedAt": "2026-05-24T00:20:14.025Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779582110058": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:21:50.059Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779582110163": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:21:50.165Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779582110163": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:21:50.289Z",
+      "error": null,
+      "at": "2026-05-24T00:21:50.288Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779582110793": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:21:50.794Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779582110793": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:21:50.864Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779582110977": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:21:50.979Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779582110977": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:21:51.024Z",
+      "error": null,
+      "at": "2026-05-24T00:21:51.024Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:21:51.051Z",
+      "error": null,
+      "at": "2026-05-24T00:21:51.051Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779582111090": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779582111162": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:21:51.164Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779582111192": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:21:51.192Z",
+      "updatedAt": "2026-05-24T00:21:51.197Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779582176319": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:22:56.321Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779582176330": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:22:56.332Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779582176330": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:22:56.346Z",
+      "error": null,
+      "at": "2026-05-24T00:22:56.345Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779582176365": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:22:56.371Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779582176365": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:22:56.398Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779582176412": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:22:56.414Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779582176412": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:22:56.422Z",
+      "error": null,
+      "at": "2026-05-24T00:22:56.421Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:22:56.431Z",
+      "error": null,
+      "at": "2026-05-24T00:22:56.431Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779582176443": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779582176500": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:22:56.503Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779582176514": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:22:56.514Z",
+      "updatedAt": "2026-05-24T00:22:56.516Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779582412723": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:26:52.724Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779582412731": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:26:52.732Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779582412731": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:26:52.741Z",
+      "error": null,
+      "at": "2026-05-24T00:26:52.741Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779582412763": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:26:52.764Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779582412763": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:26:52.769Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779582412773": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:26:52.774Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779582412773": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:26:52.780Z",
+      "error": null,
+      "at": "2026-05-24T00:26:52.780Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:26:52.788Z",
+      "error": null,
+      "at": "2026-05-24T00:26:52.788Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779582412800": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779582412826": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:26:52.831Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779582412843": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:26:52.843Z",
+      "updatedAt": "2026-05-24T00:26:52.845Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779582471454": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:27:51.457Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779582471466": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:27:51.468Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779582471466": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:27:51.480Z",
+      "error": null,
+      "at": "2026-05-24T00:27:51.479Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779582471493": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:27:51.494Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779582471493": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:27:51.508Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779582471519": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:27:51.521Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779582471519": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:27:51.528Z",
+      "error": null,
+      "at": "2026-05-24T00:27:51.527Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:27:51.534Z",
+      "error": null,
+      "at": "2026-05-24T00:27:51.534Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779582471549": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779582471599": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:27:51.600Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779582471618": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:27:51.618Z",
+      "updatedAt": "2026-05-24T00:27:51.620Z"
+    }
+  },
+  "runtime:moduleSettings:tenant-version-1779582545008": {
+    "inventory": {
+      "values": {
+        "enabled": true,
+        "refreshIntervalSeconds": 60
+      },
+      "__uaMeta": {
+        "version": 1,
+        "schemaVersion": 1,
+        "updatedAt": "2026-05-24T00:29:05.009Z",
+        "updatedBy": "starter-owner"
+      }
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-1779582545016": {
+    "ops-alerts": {
+      "id": "ops-alerts",
+      "name": "Operations Alerts",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/webhook",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:29:05.018Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-1779582545016": {
+    "ops-alerts:window-a:risk-escalation": {
+      "status": "delivered",
+      "attempts": 2,
+      "deliveredAt": "2026-05-24T00:29:05.028Z",
+      "error": null,
+      "at": "2026-05-24T00:29:05.028Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-policy-filter-1779582545052": {
+    "targeted-risk": {
+      "id": "targeted-risk",
+      "name": "Targeted Risk",
+      "enabled": true,
+      "severities": [
+        "medium"
+      ],
+      "webhookUrl": "https://example.com/targeted",
+      "retryLimit": 1,
+      "version": 1,
+      "alertIds": [
+        "risk-escalation"
+      ],
+      "updatedAt": "2026-05-24T00:29:05.055Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-policy-filter-1779582545052": {
+    "targeted-risk:window-filter:risk-escalation": {
+      "status": "failed",
+      "attempts": 1,
+      "deliveredAt": null,
+      "error": "Webhook HTTP 503",
+      "at": "2026-05-24T00:29:05.077Z"
+    }
+  },
+  "runtime:intelligencePolicies:tenant-delivery-history-1779582545088": {
+    "history-policy": {
+      "id": "history-policy",
+      "name": "History Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/history",
+      "retryLimit": 1,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:29:05.092Z"
+    }
+  },
+  "runtime:intelligenceDeliveries:tenant-delivery-history-1779582545088": {
+    "history-policy:window-history-a:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:29:05.107Z",
+      "error": null,
+      "at": "2026-05-24T00:29:05.107Z"
+    },
+    "history-policy:window-history-b:security-score-low": {
+      "status": "delivered",
+      "attempts": 1,
+      "deliveredAt": "2026-05-24T00:29:05.113Z",
+      "error": null,
+      "at": "2026-05-24T00:29:05.113Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-1779582545123": {},
+  "runtime:intelligencePolicies:tenant-policy-version-1779582545148": {
+    "versioned-policy": {
+      "id": "versioned-policy",
+      "name": "Versioned Policy",
+      "enabled": true,
+      "severities": [
+        "high"
+      ],
+      "webhookUrl": "https://example.com/versioned",
+      "retryLimit": 2,
+      "version": 1,
+      "updatedAt": "2026-05-24T00:29:05.150Z"
+    }
+  },
+  "runtime:intelligenceSchedules:tenant-schedule-version-1779582545157": {
+    "versioned-schedule": {
+      "id": "versioned-schedule",
+      "name": "Versioned Schedule",
+      "enabled": true,
+      "profileId": "commerce",
+      "windowDays": 7,
+      "cadenceMinutes": 60,
+      "cooldownMinutes": 10,
+      "version": 1,
+      "nextRunAt": "2026-05-24T01:29:05.157Z",
+      "updatedAt": "2026-05-24T00:29:05.158Z"
     }
   }
 }

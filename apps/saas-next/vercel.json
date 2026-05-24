@@ -1,0 +1,11 @@
+{
+  "buildCommand": "prisma generate && next build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "DATABASE_URL": "@database-url",
+    "DIRECT_URL": "@direct-url",
+    "PLATFORM_ADMIN_SECRET": "@platform-admin-secret"
+  }
+}

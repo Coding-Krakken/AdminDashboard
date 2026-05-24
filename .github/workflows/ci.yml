@@ -46,3 +46,82 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  saas-validate:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: admin_dashboard_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d admin_dashboard_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/admin_dashboard_ci
+      DIRECT_URL: postgresql://postgres:postgres@127.0.0.1:5432/admin_dashboard_ci
+      PLATFORM_ADMIN_SECRET: ci-platform-secret
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck SaaS
+        run: npm run typecheck:saas
+
+      - name: Test SaaS
+        run: npm run test:saas
+
+      - name: Prepare SaaS DB Schema
+        run: |
+          for i in {1..10}; do
+            if npm run db:push; then
+              echo "SaaS DB schema ready"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "Failed to prepare SaaS DB schema"
+          exit 1
+
+      - name: Start SaaS App
+        run: |
+          npm run dev:saas > /tmp/saas-dev.log 2>&1 &
+          echo $! > /tmp/saas-dev.pid
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:4200/api/platform/health > /dev/null; then
+              echo "SaaS app is ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "SaaS app failed to start"
+          cat /tmp/saas-dev.log
+          exit 1
+
+      - name: Verify SaaS Smoke (Provisioning)
+        run: |
+          npm run verify:saas-smoke -- \
+            --base-url=http://127.0.0.1:4200 \
+            --platform-secret=$PLATFORM_ADMIN_SECRET
+
+      - name: Stop SaaS App
+        if: always()
+        run: |
+          if [ -f /tmp/saas-dev.pid ]; then
+            kill "$(cat /tmp/saas-dev.pid)" || true
+          fi
