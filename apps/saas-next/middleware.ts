@@ -36,9 +36,12 @@ export function middleware(request: NextRequest) {
     });
   }
 
-  // Platform admin routes bypass tenant resolution
+  // Platform admin pages should always run in platform mode.
+  // Without this header, the root layout attempts tenant DB resolution and can 500.
   if (PLATFORM_ADMIN_PATHS.some((p) => pathname.startsWith(p))) {
-    return NextResponse.next();
+    const headers = new Headers(request.headers);
+    headers.set("x-tenant-mode", "platform");
+    return NextResponse.next({ request: { headers } });
   }
 
   // Known platform hosts serve the platform admin/onboarding UI

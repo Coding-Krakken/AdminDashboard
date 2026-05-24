@@ -23,19 +23,19 @@ describe("saas middleware tenant routing", () => {
     expect(response.headers.get("x-middleware-request-x-tenant-id")).toBe("tenant-1");
   });
 
-  it("bypasses tenant header injection for platform admin paths", () => {
+  it("marks platform admin paths as platform mode", () => {
     const request = makeRequest("http://localhost:3000/_platform", "localhost:3000");
     const response = middleware(request);
 
-    expect(response.headers.get("x-middleware-request-x-tenant-mode")).toBeNull();
+    expect(response.headers.get("x-middleware-request-x-tenant-mode")).toBe("platform");
     expect(response.headers.get("x-middleware-request-x-tenant-hostname")).toBeNull();
   });
 
-  it("bypasses tenant header injection for platform API paths", () => {
+  it("marks platform API paths as platform mode", () => {
     const request = makeRequest("http://localhost:3000/api/platform/tenants", "localhost:3000");
     const response = middleware(request);
 
-    expect(response.headers.get("x-middleware-request-x-tenant-mode")).toBeNull();
+    expect(response.headers.get("x-middleware-request-x-tenant-mode")).toBe("platform");
     expect(response.headers.get("x-middleware-request-x-tenant-hostname")).toBeNull();
   });
 
