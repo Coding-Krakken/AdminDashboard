@@ -42,12 +42,21 @@ export async function GET(request: NextRequest) {
     return blocked;
   }
 
-  const tenants = await prisma.tenant.findMany({
-    include: { domains: true },
-    orderBy: { createdAt: "desc" }
-  });
+  try {
+    const tenants = await prisma.tenant.findMany({
+      include: { domains: true },
+      orderBy: { createdAt: "desc" }
+    });
 
-  return NextResponse.json({ tenants });
+    return NextResponse.json({ tenants });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Failed to list tenants", error);
+    return NextResponse.json(
+      { error: "Failed to list tenants", details: message },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -56,7 +65,13 @@ export async function POST(request: NextRequest) {
     return blocked;
   }
 
-  const body = await request.json();
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
   const parsed = CreateTenantSchema.safeParse(body);
 
   if (!parsed.success) {
@@ -66,50 +81,59 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const {
-    slug,
-    name,
-    businessProfile,
-    preferredAccessStrategy,
-    authProvider,
-    authConfig,
-    dashboardConfig,
-    theme
-  } = parsed.data;
-
-  const existing = await prisma.tenant.findUnique({ where: { slug } });
-  if (existing) {
-    return NextResponse.json(
-      { error: "Tenant with this slug already exists" },
-      { status: 409 }
-    );
-  }
-
-  const tenant = await prisma.tenant.create({
-    data: {
+  try {
+    const {
       slug,
       name,
-      status: "ACTIVE",
-      config: {
-        create: {
-          dashboardConfig: dashboardConfig as object,
-          authProvider,
-          authConfig: authConfig as object,
-          businessProfile,
-          preferredAccessStrategy
+      businessProfile,
+      preferredAccessStrategy,
+      authProvider,
+      authConfig,
+      dashboardConfig,
+      theme
+    } = parsed.data;
+
+    const existing = await prisma.tenant.findUnique({ where: { slug } });
+    if (existing) {
+      return NextResponse.json(
+        { error: "Tenant with this slug already exists" },
+        { status: 409 }
+      );
+    }
+
+    const tenant = await prisma.tenant.create({
+      data: {
+        slug,
+        name,
+        status: "ACTIVE",
+        config: {
+          create: {
+            dashboardConfig: dashboardConfig as object,
+            authProvider,
+            authConfig: authConfig as object,
+            businessProfile,
+            preferredAccessStrategy
+          }
+        },
+        theme: {
+          create: {
+            tokens: theme.tokens,
+            logoUrl: theme.logoUrl,
+            faviconUrl: theme.faviconUrl,
+            darkMode: theme.darkMode
+          }
         }
       },
-      theme: {
-        create: {
-          tokens: theme.tokens,
-          logoUrl: theme.logoUrl,
-          faviconUrl: theme.faviconUrl,
-          darkMode: theme.darkMode
-        }
-      }
-    },
-    include: { config: true, theme: true, domains: true }
-  });
+      include: { config: true, theme: true, domains: true }
+    });
 
-  return NextResponse.json({ tenant }, { status: 201 });
+    return NextResponse.json({ tenant }, { status: 201 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Failed to create tenant", error);
+    return NextResponse.json(
+      { error: "Failed to create tenant", details: message },
+      { status: 500 }
+    );
+  }
 }
