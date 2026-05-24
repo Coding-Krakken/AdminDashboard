@@ -263,6 +263,18 @@
       "action": "health.check",
       "entity": "runtime",
       "entityId": "health-probe"
+    },
+    {
+      "actorId": "runtime-health",
+      "action": "health.check",
+      "entity": "runtime",
+      "entityId": "health-probe"
+    },
+    {
+      "actorId": "runtime-health",
+      "action": "health.check",
+      "entity": "runtime",
+      "entityId": "health-probe"
     }
   ]
 }

@@ -2659,6 +2659,110 @@
         "tenantId": "default-tenant",
         "at": "2026-05-24T00:29:04.998Z"
       }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.custom-at.1779584361229",
+      "entity": "audit-runtime-test",
+      "entityId": "custom-at-case",
+      "metadata": {
+        "at": "2026-05-17T00:59:21.229Z",
+        "marker": "custom-at",
+        "tenantId": "default-tenant"
+      }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.timestamp.1779584361315",
+      "entity": "audit-runtime-test",
+      "entityId": "timestamp-case",
+      "metadata": {
+        "marker": "timestamp",
+        "tenantId": "default-tenant",
+        "at": "2026-05-24T00:59:21.315Z"
+      }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.redaction.1779584361322",
+      "entity": "audit-runtime-test",
+      "entityId": "redaction-case",
+      "metadata": {
+        "safe": "keep-me",
+        "password": "super-secret",
+        "nested": {
+          "token": "abc123"
+        },
+        "tenantId": "default-tenant",
+        "at": "2026-05-24T00:59:21.322Z"
+      }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.timestamp-normalize.1779584361344",
+      "entity": "audit-runtime-test",
+      "entityId": "timestamp-normalize-case",
+      "metadata": {
+        "timestamp": "2026-05-24T00:59:21.344Z",
+        "marker": "timestamp-normalize",
+        "tenantId": "default-tenant",
+        "at": "2026-05-24T00:59:21.345Z"
+      }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.retention.1779584361354",
+      "entity": "audit-runtime-test",
+      "entityId": "retention-case",
+      "metadata": {
+        "at": "2025-04-19T00:59:21.354Z",
+        "marker": "retention-old",
+        "tenantId": "default-tenant"
+      }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.tenant-scope.1779584361399",
+      "entity": "audit-runtime-test",
+      "entityId": "tenant-alpha-case",
+      "metadata": {
+        "marker": "tenant-alpha",
+        "tenantId": "tenant-alpha",
+        "at": "2026-05-24T00:59:21.399Z"
+      }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.tenant-scope.1779584361399",
+      "entity": "audit-runtime-test",
+      "entityId": "tenant-beta-case",
+      "metadata": {
+        "marker": "tenant-beta",
+        "tenantId": "tenant-beta",
+        "at": "2026-05-24T00:59:21.403Z"
+      }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.entity-id.1779584361415",
+      "entity": "module-settings",
+      "entityId": "intelligence",
+      "metadata": {
+        "marker": "intelligence-settings",
+        "tenantId": "default-tenant",
+        "at": "2026-05-24T00:59:21.416Z"
+      }
+    },
+    {
+      "actorId": "starter-owner",
+      "action": "test.audit.entity-id.1779584361415",
+      "entity": "module-settings",
+      "entityId": "inventory",
+      "metadata": {
+        "marker": "inventory-settings",
+        "tenantId": "default-tenant",
+        "at": "2026-05-24T00:59:21.419Z"
+      }
     }
   ]
 }
