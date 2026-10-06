@@ -1,26 +1,26 @@
 name: ForgeCI Self-Hosted CI Pipeline
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
     paths-ignore:
-      - '**.md'
-      - 'docs/**'
-      - '.vscode/**'
-      - '.claude/**'
-      - 'LICENSE'
+      - "**.md"
+      - "docs/**"
+      - ".vscode/**"
+      - ".claude/**"
+      - "LICENSE"
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
     paths-ignore:
-      - '**.md'
-      - 'docs/**'
-      - '.vscode/**'
-      - '.claude/**'
-      - 'LICENSE'
+      - "**.md"
+      - "docs/**"
+      - ".vscode/**"
+      - ".claude/**"
+      - "LICENSE"
 
 jobs:
   validate:
     name: Validation & Tests
-    runs-on: [ linux, amd64, docker ]
+    runs-on: [linux, amd64, docker]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
